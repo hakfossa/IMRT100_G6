@@ -48,7 +48,7 @@ print("Entering loop. Ctrl+c to terminate")
 while not motor_serial.shutdown_now:
     
     print("driving for 3 seconds")
-    drive_robot(FORWARDS, 3)
+    drive_robot(BACKWARDS, 3)
     print("stopping for 1 second")
     time.sleep(1)
 
