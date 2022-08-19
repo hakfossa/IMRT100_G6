@@ -33,7 +33,8 @@ def drive_robot(direction, duration):
 
 try:
     motor_serial.connect("/dev/ttyACM0")
-except:
+except Exception as e:
+    print(e)
     print("Could not open port. Is your robot connected?\nExiting program")
     sys.exit()
 
