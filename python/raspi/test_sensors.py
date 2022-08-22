@@ -27,7 +27,10 @@ motor_serial.run()
 print("Entering loop. Ctrl+c to terminate")
 while not motor_serial.shutdown_now:
     os.system('clear')
+    print("sensor 1:", motor_serial.get_dist_1())
+    print("sensor 2:", motor_serial.get_dist_2())
     print("sensor 3:", motor_serial.get_dist_3())
+    print("sensor 4:", motor_serial.get_dist_4())
     time.sleep(0.1)
 
 
