@@ -31,7 +31,6 @@ while not motor_serial.shutdown_now:
     print("sensor 2:", motor_serial.get_dist_2())
     print("sensor 3:", motor_serial.get_dist_3())
     print("sensor 4:", motor_serial.get_dist_4())
-    time.sleep(0.1)
 
 
 
