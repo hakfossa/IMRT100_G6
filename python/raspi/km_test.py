@@ -116,7 +116,7 @@ while not motor_serial.shutdown_now:
     print(sense_fwd(),avg_fwd())
 
     # Obstacle check
-    if avg_dist_fwd < STOP_DISTANCE:
+    if avg_fwd() < STOP_DISTANCE:
         print("halt")
         stop_robot(tstep)
     else:
