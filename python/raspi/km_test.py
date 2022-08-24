@@ -132,11 +132,12 @@ def plotsensors():
             else: row.append(' ')
         plotgrid.append(row)
  
+    plotthis = ''
     for y in reversed(range(plotheight)):
         plotline=''
         for x in range(plotwidth):
             plotline = plotline+str(plotgrid[x][y])
-        plotthis=plotthis+plotline+'\n'
+        plotthis = plotthis+plotline+'\n'
     print(plotthis)
 
 
