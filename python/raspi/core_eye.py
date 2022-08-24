@@ -15,13 +15,13 @@ FPS = 30
 FPS_CONTROLLER = pygame.time.Clock()
 
 #farger
-BLACK = '#000000'
+BLACK = (0,0,0)
 
 #setup av display
 screenX = 800
 screenY = 480
 DISPLAY = pygame.display.set_mode((screenX, screenY))
-DISPLAY.fill((0,0,0))
+DISPLAY.fill(BLACK)
 pygame.display.set_caption("space_core")
 
 class Core_eye(pygame.sprite.Sprite):
