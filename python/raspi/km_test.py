@@ -121,10 +121,11 @@ def plotsensors():
     bar_r = sense_r()/scaleby
     bar_l = sense_l()/scaleby
 
+    print(sense_fwd()/scaleby)
     for x in range(plotwidth):
         row = []
         for y in range(plotheight):
-            if 1 < x < 3 and y <= (sense_fwd()/scaleby):
+            if y < (sense_fwd()/scaleby):
                 row.append('#')
             elif 1 < x < 3 and (plotheight-2) < y < plotheight:
                 row.append(sense_fwd())
