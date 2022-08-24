@@ -66,42 +66,57 @@ except:
 # Start serial receive thread
 motor_serial.run()
 
-# Defining a function that retrieves sensor data and updates the time avg. array for each sensor
-def sense():
-    # Sensor outputs
+# Functions that retrieve sensor data & avges
+def sense_fwd():
     dist_fwd = motor_serial.get_dist_1()
-    dist_back = motor_serial.get_dist_2()
+    return dist_fwd
+def avg_fwd()
+    avg_dist_fwd = sum(DX_fwd)/DXlength
+    return avg_dist_fwd
+
+def sense_bck():
+    dist_bck = motor_serial.get_dist_2()
+    return dist_bck
+def avg_bck():
+    avg_dist_bck = sum(DX_bck)/DXlength
+    return avg_dist_bck
+
+def sense_r():
     dist_r = motor_serial.get_dist_3()
+    return dist_r
+def avg_r():
+    avg_dist_r = sum(DX_r)/DXlength
+    return avg_dist_r
+
+def sense_l():
     dist_l = motor_serial.get_dist_4()
-    print("fwd:", dist_fwd, "bck:", dist_back, "R:", dist_r, "L:", dist_l)
-    
+    return dist_l
+def avg_l():
+    avg_dist_l = sum(DX_l)/DXlength
+    return avg_dist_l
+
+def avg_update():    
     # Update sensors' indices of recent values:
-    DX_fwd.append(dist_fwd) # Add most recent value
+    DX_fwd.append(sense_fwd()) # Add most recent value
     DX_fwd.pop(0) # Delete oldest value
 
-    DX_bck.append(dist_back)
+    DX_bck.append(sense_bck())
     DX_bck.pop(0)
 
-    DX_r.append(dist_r)
+    DX_r.append(sense_r())
     DX_r.pop(0)
 
-    DX_l.append(dist_l)
+    DX_l.append(sense_l())
     DX_r.pop(0)
-
-    # Extract instantaneous values
-    DXv_fwd = sum(DX_fwd)/DXlength
-    DXv_bck = sum(DX_bck)/DXlength
-    DXv_r = sum(DX_r)/DXlength
-    DXv_l = sum(DX_l)/DXlength
-    print("DXv_fwd:",DXv_fwd,"DXv_bck:",DXv_bck,"DXv_r:",DXv_r,"DXv_l:",DXv_l)
 
 # Exec loop
 while not motor_serial.shutdown_now:
 
-    sense()
+    avg_update()
+    print(sense_fwd(),avg_fwd())
 
     # Obstacle check
-    if DXv_fwd < STOP_DISTANCE:
+    if avg_dist_fwd < STOP_DISTANCE:
         print("halt")
         stop_robot(tstep)
     else:
