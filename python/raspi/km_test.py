@@ -104,7 +104,7 @@ def avg_update():
     # If diff between value and previous avg is more than x,
     # discard newest value and repeat 2nd most recent value instead.
     if abs((sum(DX_fwd)/DXlength) - current_fwd) < avg_threshold:
-            DX_fwd.append(current_fwd)
+        DX_fwd.append(current_fwd)
     else:
         DX_fwd.append(DX_fwd[DXlength-1])
         print("FWD scrapped from average")
