@@ -109,31 +109,30 @@ def avg_update():
     DX_l.append(sense_l())
     DX_l.pop(0)
 
-# Plotter setup
-plotwidth = 8
-plotheight = 10
-plotgrid = []
-
-# Plotter
-def plotsensors():
-    print(sense_fwd()/25)
-    for x in range(plotwidth):
-        row = []
-        for y in range(plotheight):
-            if y < (sense_fwd()/25):
-                row.append('#')
-            elif 1 < x < 3 and (plotheight-2) < y < plotheight:
-                row.append(sense_fwd())
-            else: row.append(' ')
-        plotgrid.append(row)
- 
-    plotthis = ''
-    for y in reversed(range(plotheight)):
-        plotline=''
-        for x in range(plotwidth):
-            plotline = plotline+str(plotgrid[x][y])
-        plotthis = plotthis+plotline+'\n'
-    print(plotthis)
+# Scrapped plotter
+#
+# plotwidth = 8
+# plotheight = 10
+# plotgrid = []
+#
+# def plotsensors():
+#    print(sense_fwd()/25)
+#    for x in range(plotwidth):
+#        row = []
+#        for y in range(plotheight):
+#            if y < (sense_fwd()/20):
+#                row.append('#')
+#            elif 1 < x < 3 and (plotheight-2) < y < plotheight:
+#                row.append(sense_fwd())
+#            else: row.append(' ')
+#        plotgrid.append(row)
+#     plotthis = ''
+#    for y in reversed(range(plotheight)):
+#        plotline=''
+#        for x in range(plotwidth):
+#            plotline = plotline+str(plotgrid[x][y])
+#        plotthis = plotthis+plotline+'\n'
+#    print(plotthis)
 
 
 # Exec loop
@@ -141,10 +140,9 @@ while not motor_serial.shutdown_now:
 
     avg_update()
     sense_fwd()
-    plotsensors()
 
-#    print(sense_fwd(),sense_bck(),sense_r(),sense_l())
-#    print("avges:",avg_fwd(),avg_bck(),avg_r(),avg_l())
+    print(sense_fwd(),sense_bck(),sense_r(),sense_l())
+    print("avges,",DXlength,"times timestep memory:",avg_fwd(),avg_bck(),avg_r(),avg_l())
 
     # Obstacle check
     if avg_fwd() < STOP_DISTANCE:
