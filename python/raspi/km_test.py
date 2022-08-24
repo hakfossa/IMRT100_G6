@@ -107,7 +107,7 @@ def avg_update():
     DX_r.pop(0)
 
     DX_l.append(sense_l())
-    DX_r.pop(0)
+    DX_l.pop(0)
 
 # Exec loop
 while not motor_serial.shutdown_now:
