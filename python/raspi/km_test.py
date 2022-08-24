@@ -19,7 +19,7 @@ DRIVING_SPEED = 100
 TURNING_SPEED = 100
 STOP_DISTANCE = 25
 
-tfreq = 10 # Timer Frequency, Execution frequency in Hz
+tfreq = 20 # Timer Frequency, Execution frequency in Hz
 tstep = 1/tfreq # Timer Step length
 
 DX_fwd = []
@@ -166,8 +166,8 @@ while not motor_serial.shutdown_now:
     avg_update()
     sense_fwd()
 
-    print(sense_fwd(),sense_bck(),sense_r(),sense_l())
-    print("avges,",DXlength,"times timestep memory:",avg_fwd(),avg_bck(),avg_r(),avg_l())
+    print(" FWD:",sense_fwd(),"BCK:",sense_bck(),"R:",sense_r(),"L:",sense_l())
+    print("aFWD:",avg_fwd(),"aBCK:",avg_bck(),"aR:"avg_r(),"aL:",avg_l())
 
     # Obstacle check
     if avg_fwd() < STOP_DISTANCE:
