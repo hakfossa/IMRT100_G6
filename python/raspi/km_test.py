@@ -113,7 +113,6 @@ def avg_update():
 plotwidth = 8
 plotheight = 28
 plotgrid = []
-row = []
 
 # Plotter
 def plotsensors():
@@ -124,6 +123,7 @@ def plotsensors():
     bar_l = sense_l()/scaleby
 
     for x in range(plotwidth):
+        row = []
         for y in range(plotheight):
             if 1 < x < 3 and y <= bar_fwd:
                 row.append('#')
@@ -131,8 +131,7 @@ def plotsensors():
                 row.append(sense_fwd())
             else: row.append(' ')
         plotgrid.append(row)
-        row = []
-    
+ 
     for y in reversed(range(plotheight)):
         plotline=''
         for x in range(plotwidth):
