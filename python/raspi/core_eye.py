@@ -20,7 +20,7 @@ BLACK = (0,0,0)
 #setup av display
 screenX = 800
 screenY = 480
-DISPLAY = pygame.display.set_mode((screenX, screenY))
+DISPLAY = pygame.display.set_mode((screenX, screenY), pygame.FULLSCREEN)
 DISPLAY.fill(BLACK)
 pygame.display.set_caption("space_core")
 
