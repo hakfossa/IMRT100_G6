@@ -94,7 +94,7 @@ class Core_eye(pygame.sprite.Sprite):
     def random_movement(self):
         angle = random.randint(0, 36)
         rad = 2*pi * angle/36
-        self.speed_x = cos(rad)*self._SPEED
+        self.speed_x = cos(rad)*self._SPEED*2
         self.speed_y = sin(rad)*self._SPEED
         print("angle:", angle)
 
