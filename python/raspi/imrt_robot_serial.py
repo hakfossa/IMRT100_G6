@@ -132,7 +132,7 @@ class IMRTRobotSerial :
 
 
 
-    # Returns latest measurement from distance sensor 2
+    # Returns latest measurement from distance sensor 3
     def get_dist_3(self):
         
         self._mutex.acquire()
@@ -144,7 +144,7 @@ class IMRTRobotSerial :
 
 
 
-    # Returns latest measurement from distance sensor 2
+    # Returns latest measurement from distance sensor 4
     def get_dist_4(self):
         
         self._mutex.acquire()
