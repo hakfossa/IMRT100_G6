@@ -95,18 +95,39 @@ def sense_l():
     dist_l = motor_serial.get_dist_4()
     return dist_l
 
+# Threshold for scrapping data on its way into the average, in approximate cm*s^-1
+avg_threshold = 60
+
+# Update indices for recent values
 def avg_update():    
-    # Update sensors' indices of recent values:
-    DX_fwd.append(sense_fwd()) # Add most recent value
+    current_fwd = sense_fwd()
+    # If diff between value and previous avg is more than x,
+    # discard newest value and repeat 2nd most recent value instead.
+    if abs((sum(DX_fwd)/DXlength) - current_fwd) > avg_threshold
+            DX_fwd.append(current_fwd)
+            print("FWD scrapped from average")
+    else: DX_fwd.append(DX_fwd(DXlength))
     DX_fwd.pop(0) # Delete oldest value
 
-    DX_bck.append(sense_bck())
+    current_bck = sense_bck()
+    if abs((sum(DX_bck)/DXlength) - current_bck) > avg_threshold
+            DX_bck.append(current_bck)
+            print("BCK scrapped from average")
+    else: DX_bck.append(DX_bck(DXlength))
     DX_bck.pop(0)
 
-    DX_r.append(sense_r())
+    current_r = sense_r()
+    if abs((sum(DX_r)/DXlength) - current_r) > avg_threshold
+            DX_r.append(current_r)
+            print("R scrapped from average")
+    else: DX_r.append(DX_r(DXlength))
     DX_r.pop(0)
 
-    DX_l.append(sense_l())
+    current_l = sense_l()
+    if abs((sum(DX_l)/DXlength) - current_l) > avg_threshold
+            DX_l.append(current_l)
+            print("L scrapped from average")
+    else: DX_l.append(DX_l(DXlength))
     DX_l.pop(0)
 
 # Scrapped plotter
