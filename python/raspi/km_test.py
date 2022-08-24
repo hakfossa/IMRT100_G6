@@ -106,28 +106,28 @@ def avg_update():
     if abs((sum(DX_fwd)/DXlength) - current_fwd) > avg_threshold:
             DX_fwd.append(current_fwd)
             print("FWD scrapped from average")
-    else: DX_fwd.append(DX_fwd(DXlength))
+    else: DX_fwd.append(DX_fwd[DXlength])
     DX_fwd.pop(0) # Delete oldest value
 
     current_bck = sense_bck()
     if abs((sum(DX_bck)/DXlength) - current_bck) > avg_threshold:
             DX_bck.append(current_bck)
             print("BCK scrapped from average")
-    else: DX_bck.append(DX_bck(DXlength))
+    else: DX_bck.append(DX_bck[DXlength])
     DX_bck.pop(0)
 
     current_r = sense_r()
     if abs((sum(DX_r)/DXlength) - current_r) > avg_threshold:
             DX_r.append(current_r)
             print("R scrapped from average")
-    else: DX_r.append(DX_r(DXlength))
+    else: DX_r.append(DX_r[DXlength])
     DX_r.pop(0)
 
     current_l = sense_l()
     if abs((sum(DX_l)/DXlength) - current_l) > avg_threshold:
             DX_l.append(current_l)
             print("L scrapped from average")
-    else: DX_l.append(DX_l(DXlength))
+    else: DX_l.append(DX_l[DXlength])
     DX_l.pop(0)
 
 # Scrapped plotter
