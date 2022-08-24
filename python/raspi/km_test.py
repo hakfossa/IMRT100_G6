@@ -30,7 +30,7 @@ DXlength = 10
 # Go through the sensors and give them an appropriate amount of nothing
 valid_sensors = [DX_fwd,DX_bck,DX_r,DX_l]
 for sensor in valid_sensors:
-    for i in range(DXLength):
+    for i in range(DXlength):
         sensor.append(255)
 print("Sensor arrays filled with gibberish")
 
