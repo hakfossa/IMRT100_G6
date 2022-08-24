@@ -113,6 +113,7 @@ def avg_update():
 plotwidth = 8
 plotheight = 28
 plotgrid = []
+row = []
 
 # Plotter
 def plotsensors():
