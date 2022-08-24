@@ -103,31 +103,35 @@ def avg_update():
     current_fwd = sense_fwd()
     # If diff between value and previous avg is more than x,
     # discard newest value and repeat 2nd most recent value instead.
-    if abs((sum(DX_fwd)/DXlength) - current_fwd) > avg_threshold:
+    if abs((sum(DX_fwd)/DXlength) - current_fwd) < avg_threshold:
             DX_fwd.append(current_fwd)
-            print("FWD scrapped from average")
-    else: DX_fwd.append(DX_fwd[DXlength-1])
+    else:
+        DX_fwd.append(DX_fwd[DXlength-1])
+        print("FWD scrapped from average")
     DX_fwd.pop(0) # Delete oldest value
 
     current_bck = sense_bck()
-    if abs((sum(DX_bck)/DXlength) - current_bck) > avg_threshold:
-            DX_bck.append(current_bck)
-            print("BCK scrapped from average")
-    else: DX_bck.append(DX_bck[DXlength-1])
+    if abs((sum(DX_bck)/DXlength) - current_bck) < avg_threshold:
+        DX_bck.append(current_bck)
+    else:
+        DX_bck.append(DX_bck[DXlength-1])
+        print("BCK scrapped from average")
     DX_bck.pop(0)
 
     current_r = sense_r()
-    if abs((sum(DX_r)/DXlength) - current_r) > avg_threshold:
-            DX_r.append(current_r)
-            print("R scrapped from average")
-    else: DX_r.append(DX_r[DXlength-1])
+    if abs((sum(DX_r)/DXlength) - current_r) < avg_threshold:
+        DX_r.append(current_r)
+    else:
+        DX_r.append(DX_r[DXlength-1])
+        print("R scrapped from average")
     DX_r.pop(0)
 
     current_l = sense_l()
-    if abs((sum(DX_l)/DXlength) - current_l) > avg_threshold:
+    if abs((sum(DX_l)/DXlength) - current_l) < avg_threshold:
             DX_l.append(current_l)
-            print("L scrapped from average")
-    else: DX_l.append(DX_l[DXlength-1])
+    else:
+        DX_l.append(DX_l[DXlength-1])
+        print("L scrapped from average")
     DX_l.pop(0)
 
 # Scrapped plotter
