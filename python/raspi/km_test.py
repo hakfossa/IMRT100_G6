@@ -127,7 +127,7 @@ def plotsensors():
         for y in range(plotheight):
             if 1 < x < 3 and y <= bar_fwd:
                 row.append('#')
-            elif 1 < x < 3 and (plotheight-3) < y < plotheight:
+            elif 1 < x < 3 and (plotheight-2) < y < plotheight:
                 row.append(sense_fwd())
             else: row.append(' ')
         plotgrid.append(row)
@@ -145,6 +145,7 @@ def plotsensors():
 while not motor_serial.shutdown_now:
 
     avg_update()
+    sense_fwd()
     plotsensors()
 
 #    print(sense_fwd(),sense_bck(),sense_r(),sense_l())
