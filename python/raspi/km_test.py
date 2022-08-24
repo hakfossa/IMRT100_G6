@@ -33,6 +33,8 @@ DX_l = []
 # A higher value means more dampening against sudden change.
 DXlength = 60
 
+# Sneerp Snoorp
+
 # Go through the sensors and give them an appropriate amount of nothing
 sensor_list = [DX_fwd,DX_bck,DX_r,DX_l]
 for sensor in sensor_list:
