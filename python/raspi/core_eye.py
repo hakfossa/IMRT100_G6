@@ -20,9 +20,10 @@ BLACK = (0,0,0)
 #setup av display
 screenX = 800
 screenY = 480
-DISPLAY = pygame.display.set_mode((screenX, screenY), pygame.FULLSCREEN)
+DISPLAY = pygame.display.set_mode((screenX, screenY))
 DISPLAY.fill(BLACK)
 pygame.display.set_caption("space_core")
+_fullscreen = False
 
 class Core_eye(pygame.sprite.Sprite):
     def __init__(self):
@@ -93,7 +94,7 @@ class Core_eye(pygame.sprite.Sprite):
     def random_movement(self):
         angle = random.randint(0, 36)
         rad = 2*pi * angle/36
-        self.speed_x = cos(rad)*self._SPEED
+        self.speed_x = cos(rad)*self._SPEED*2
         self.speed_y = sin(rad)*self._SPEED
         print("angle:", angle)
 
@@ -160,8 +161,18 @@ while True:
         if event.type == QUIT:
             pygame.quit()
             sys.exit()
+        if event.type == KEYDOWN:
+            if event.key == K_ESCAPE:
+                sys.exit()
 
-
+            elif event.key == K_f:
+                if _fullscreen:
+                    DISPLAY = pygame.display.set_mode((screenX, screenY))
+                    _fullscreen = False
+                else:
+                    DISPLAY = pygame.display.set_mode((screenX, screenY), pygame.FULLSCREEN)
+                    _fullscreen = True
+    
     eye.update()
     upper.update()
     
