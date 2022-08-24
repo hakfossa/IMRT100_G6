@@ -68,13 +68,14 @@ motor_serial.run()
 
 # Defining a function that retrieves sensor data and updates the time avg. array for each sensor
 def sense():
-    # Sensor definitions
+    # Sensor outputs
     dist_fwd = motor_serial.get_dist_1()
     dist_back = motor_serial.get_dist_2()
     dist_r = motor_serial.get_dist_3()
     dist_l = motor_serial.get_dist_4()
     print("fwd:", dist_fwd, "bck:", dist_back, "R:", dist_r, "L:", dist_l)
     
+    # Update sensors' indices of recent values:
     DX_fwd.append(dist_fwd) # Add most recent value
     DX_fwd.pop(0) # Delete oldest value
 
@@ -87,7 +88,12 @@ def sense():
     DX_l.append(dist_l)
     DX_r.pop(0)
 
-    time.sleep(tstep)
+    # Extract instantaneous values
+    DXv_fwd = sum(DX_fwd)/DXlength
+    DXv_bck = sum(DX_bck)/DXlength
+    DXv_r = sum(DX_r)/DXlength
+    DXv_l = sum(DX_l)/DXlength
+    print("DXv_fwd:",DXv_fwd,"DXv_bck:",DXv_bck,"DXv_r:",DXv_r,"DXv_l:",DXv_l)
 
 # Exec loop
 while not motor_serial.shutdown_now:
@@ -95,7 +101,7 @@ while not motor_serial.shutdown_now:
     sense()
 
     # Obstacle check
-    if DX_fwd < STOP_DISTANCE:
+    if DXv_fwd < STOP_DISTANCE:
         print("halt")
         stop_robot(tstep)
     else:
