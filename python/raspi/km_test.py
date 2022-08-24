@@ -22,11 +22,16 @@ STOP_DISTANCE = 25
 tfreq = 20 # Timer Frequency, Execution frequency in Hz
 tstep = 1/tfreq # Timer Step length
 
+# Setup buffers for dampening/averages
 DX_fwd = []
 DX_bck = []
 DX_r = []
 DX_l = []
-DXlength = 10
+
+# Setup how many recordings should be kept in memory at once.
+# Recordings happen once every tstep miliseconds.
+# A higher value means more dampening against sudden change.
+DXlength = 60
 
 # Go through the sensors and give them an appropriate amount of nothing
 sensor_list = [DX_fwd,DX_bck,DX_r,DX_l]
