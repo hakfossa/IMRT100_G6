@@ -116,7 +116,7 @@ plotgrid = []
 
 # Plotter
 def plotsensors():
-    print(sense_fwd()/scaleby)
+    print(sense_fwd()/25)
     for x in range(plotwidth):
         row = []
         for y in range(plotheight):
