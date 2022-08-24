@@ -66,7 +66,7 @@ while not motor_serial.shutdown_now :
     dist_4 = motor_serial.get_dist_4()
     print("Dist 1:", dist_1, "   Dist 2:", dist_2,"   Dist 3",dist_3,"   Dist 4",dist_4)
 
-    if dist_1 < 15 or dist_2 < 15 or dist_3 < 15 or dist_4 < 15
+    if dist_1 < 15 or dist_2 < 15 or dist_3 < 15 or dist_4 < 15:
         stop_robot(1)
         turn_left() 
     else:
