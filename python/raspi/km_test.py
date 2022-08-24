@@ -111,7 +111,7 @@ def avg_update():
 
 # Plotter setup
 plotwidth = 8
-plotheight = 28
+plotheight = 10
 plotgrid = []
 
 # Plotter
