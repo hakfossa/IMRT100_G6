@@ -70,7 +70,7 @@ motor_serial.run()
 def sense_fwd():
     dist_fwd = motor_serial.get_dist_1()
     return dist_fwd
-def avg_fwd()
+def avg_fwd():
     avg_dist_fwd = sum(DX_fwd)/DXlength
     return avg_dist_fwd
 
