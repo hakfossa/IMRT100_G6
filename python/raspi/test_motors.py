@@ -33,7 +33,7 @@ def drive_robot(direction, duration):
 motor_serial = imrt_robot_serial.IMRTRobotSerial()
 
 try:
-    motor_serial.connect("/dev/ttyACM0")
+    motor_serial.connect("/dev/ttyUSB0")
 except Exception as e:
     print(e)
     print("Could not open port. Is your robot connected?\nExiting program")
