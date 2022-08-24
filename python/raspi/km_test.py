@@ -167,7 +167,7 @@ while not motor_serial.shutdown_now:
     sense_fwd()
 
     print(" FWD:",sense_fwd(),"BCK:",sense_bck(),"R:",sense_r(),"L:",sense_l())
-    print("aFWD:",avg_fwd(),"aBCK:",avg_bck(),"aR:"avg_r(),"aL:",avg_l())
+    print("aFWD:",avg_fwd(),"aBCK:",avg_bck(),"aR:",avg_r(),"aL:",avg_l())
 
     # Obstacle check
     if avg_fwd() < STOP_DISTANCE:
