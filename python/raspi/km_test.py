@@ -96,7 +96,7 @@ def sense_l():
     return dist_l
 
 # Threshold for scrapping data on its way into the average, in approximate cm*s^-1
-avg_threshold = 160
+avg_threshold = 300
 
 # Update indices for recent values
 def avg_update():    
