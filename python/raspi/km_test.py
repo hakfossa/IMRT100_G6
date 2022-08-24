@@ -28,14 +28,14 @@ DX_l = []
 DXlength = 10
 
 # Go through the sensors and give them an appropriate amount of nothing
-valid_sensors = [DX_fwd,DX_bck,DX_r,DX_l]
-for sensor in valid_sensors:
+sensor_list = [DX_fwd,DX_bck,DX_r,DX_l]
+for sensor in sensor_list:
     for i in range(DXlength):
         sensor.append(255)
 print("Sensor arrays filled with gibberish")
 
-# Motile functions
 
+# Motile functions
 def stop_robot(duration):
     iterations=int(duration*10)
     for i in range(iterations):
