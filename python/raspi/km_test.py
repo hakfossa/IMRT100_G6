@@ -116,16 +116,11 @@ plotgrid = []
 
 # Plotter
 def plotsensors():
-    scaleby = 255/(plotheight-3)
-    bar_bck = sense_bck()/scaleby
-    bar_r = sense_r()/scaleby
-    bar_l = sense_l()/scaleby
-
     print(sense_fwd()/scaleby)
     for x in range(plotwidth):
         row = []
         for y in range(plotheight):
-            if y < (sense_fwd()/scaleby):
+            if y < (sense_fwd()/25):
                 row.append('#')
             elif 1 < x < 3 and (plotheight-2) < y < plotheight:
                 row.append(sense_fwd())
