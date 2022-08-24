@@ -21,7 +21,7 @@ BLACK = '#000000'
 screenX = 800
 screenY = 480
 DISPLAY = pygame.display.set_mode((screenX, screenY))
-DISPLAY.fill("#000000")
+DISPLAY.fill((0,0,0))
 pygame.display.set_caption("space_core")
 
 class Core_eye(pygame.sprite.Sprite):
