@@ -67,33 +67,32 @@ except:
 motor_serial.run()
 
 # Functions that retrieve sensor data & avges
-def sense_fwd():
-    dist_fwd = motor_serial.get_dist_1()
-    return dist_fwd
+
 def avg_fwd():
     avg_dist_fwd = sum(DX_fwd)/DXlength
     return avg_dist_fwd
-
-def sense_bck():
-    dist_bck = motor_serial.get_dist_2()
-    return dist_bck
 def avg_bck():
     avg_dist_bck = sum(DX_bck)/DXlength
     return avg_dist_bck
-
-def sense_r():
-    dist_r = motor_serial.get_dist_3()
-    return dist_r
 def avg_r():
     avg_dist_r = sum(DX_r)/DXlength
     return avg_dist_r
-
-def sense_l():
-    dist_l = motor_serial.get_dist_4()
-    return dist_l
 def avg_l():
     avg_dist_l = sum(DX_l)/DXlength
     return avg_dist_l
+    
+def sense_fwd():
+    dist_fwd = motor_serial.get_dist_1()
+    return dist_fwd
+def sense_bck():
+    dist_bck = motor_serial.get_dist_2()
+    return dist_bck
+def sense_r():
+    dist_r = motor_serial.get_dist_3()
+    return dist_r
+def sense_l():
+    dist_l = motor_serial.get_dist_4()
+    return dist_l
 
 def avg_update():    
     # Update sensors' indices of recent values:
@@ -113,7 +112,11 @@ def avg_update():
 while not motor_serial.shutdown_now:
 
     avg_update()
-    print(sense_fwd(),avg_fwd())
+
+    print(sense_fwd())
+    print(sense_bck())
+    print(sense_r())
+    print(sense_l())
 
     # Obstacle check
     if avg_fwd() < STOP_DISTANCE:
