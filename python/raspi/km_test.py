@@ -76,21 +76,7 @@ except:
 # Start serial receive thread
 motor_serial.run()
 
-# Functions that retrieve sensor data & avges
-
-def avg_fwd():
-    avg_dist_fwd = sum(DX_fwd)/DXlength
-    return avg_dist_fwd
-def avg_bck():
-    avg_dist_bck = sum(DX_bck)/DXlength
-    return avg_dist_bck
-def avg_r():
-    avg_dist_r = sum(DX_r)/DXlength
-    return avg_dist_r
-def avg_l():
-    avg_dist_l = sum(DX_l)/DXlength
-    return avg_dist_l
-    
+# Functions retrieve sensor data
 def sense_fwd():
     dist_fwd = motor_serial.get_dist_1()
     return dist_fwd
@@ -104,20 +90,37 @@ def sense_l():
     dist_l = motor_serial.get_dist_4()
     return dist_l
 
+# Functions that retrieve sensor data & avges
+def avg_fwd():
+    avg_dist_fwd = sum(DX_fwd)/DXlength
+    return avg_dist_fwd
+def avg_bck():
+    avg_dist_bck = sum(DX_bck)/DXlength
+    return avg_dist_bck
+def avg_r():
+    avg_dist_r = sum(DX_r)/DXlength
+    return avg_dist_r
+def avg_l():
+    avg_dist_l = sum(DX_l)/DXlength
+    return avg_dist_l
+
 # Threshold for scrapping data on its way into the average, in approximate cm*s^-1
-avg_threshold = 255
+avg_threshold = 300
 
 # Update indices for recent values
 def avg_update():    
     current_fwd = sense_fwd()
     # If diff between value and previous avg is more than x,
     # discard newest value and repeat 2nd most recent value instead.
+    # This function is effectively disabled because avg_threshold>255,
+    # which is on purpose because it kind of sucked ass and threw out all my values.
     if abs((sum(DX_fwd)/DXlength) - current_fwd) < avg_threshold:
         DX_fwd.append(current_fwd)
     else:
         DX_fwd.append(DX_fwd[DXlength-1])
         print("FWD scrapped from average")
-    DX_fwd.pop(0) # Delete oldest value
+    # Delete oldest value
+    DX_fwd.pop(0)
 
     current_bck = sense_bck()
     if abs((sum(DX_bck)/DXlength) - current_bck) < avg_threshold:
@@ -143,32 +146,7 @@ def avg_update():
         print("L scrapped from average")
     DX_l.pop(0)
 
-# Scrapped plotter
-#
-# plotwidth = 8
-# plotheight = 10
-# plotgrid = []
-#
-# def plotsensors():
-#    print(sense_fwd()/25)
-#    for x in range(plotwidth):
-#        row = []
-#        for y in range(plotheight):
-#            if y < (sense_fwd()/20):
-#                row.append('#')
-#            elif 1 < x < 3 and (plotheight-2) < y < plotheight:
-#                row.append(sense_fwd())
-#            else: row.append(' ')
-#        plotgrid.append(row)
-#     plotthis = ''
-#    for y in reversed(range(plotheight)):
-#        plotline=''
-#        for x in range(plotwidth):
-#            plotline = plotline+str(plotgrid[x][y])
-#        plotthis = plotthis+plotline+'\n'
-#    print(plotthis)
-
-# Exec loop
+# Executive lööp
 while not motor_serial.shutdown_now:
     drive_robot(BACKWARDS,tstep)
 
