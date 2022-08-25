@@ -23,8 +23,6 @@ ROBOT_WIDTH = 0.40 # metres
 tfreq = 10 # Timer Frequency, Execution frequency in Hz
 tstep = 1/tfreq # Timer Step length
 
-
-
 ###########################################
 #   _____                                 #
 #  /  ___|                                #
@@ -206,6 +204,10 @@ def avg_update():
 # v v v v v v v v v v v v v v v v v #
 #####################################
 
+# !! !! !! !! !! !! !! !! !! !! !! !! !! !! !! !! !! !! !! !! !! !! !! !! !! !! #
+# The 1st motor in the motor_serial commands is the LEFT, the 2nd is the RIGHT. #
+# !! !! !! !! !! !! !! !! !! !! !! !! !! !! !! !! !! !! !! !! !! !! !! !! !! !! #
+
 # Functions that make the robot go places
 def stop_robot(duration):
     iterations = int(duration * 10)
@@ -222,14 +224,6 @@ def drive_robot(direction, duration):
         motor_serial.send_command(speed,speed)
         time.sleep(tstep)
 
-def which_wheel(direction, duration):
-    speed = DRIVING_SPEED * direction
-    iterations = int(duration * 10)
-
-    for i in range(iterations):
-        motor_serial.send_command(speed,0)
-        time.sleep(tstep)
-
 def turn_robot(direction, duration):
     motor_serial.send_command(TURNING_SPEED * direction, -TURNING_SPEED * direction)
     time.sleep(tstep)
@@ -240,11 +234,14 @@ def turn_robot(direction, duration):
 # If they're equidistant within a margin, you're OK;
 # check change on each, adjust motor balance to 
 
-#def drive_centered(direction, duration):
-#    speed = DRIVING_SPEED *
-#    motor_serial.send_command(r_balance * direction, -l_balance * direction)
-
-
+def drive_centered(direction, duration):
+    speed = DRIVING_SPEED * direction
+    iterations = int(duration*10)
+    for i in range(iterations):
+        r_coeff = float(avg_l() / avg_r())
+        l_coeff = float(avg_r() / avg_l())
+        motor_serial.send_command(l_coeff * speed, -r_coeff * speed)
+        time.sleep(tstep)
 
 # Create motor serial object
 motor_serial = imrt_robot_serial.IMRTRobotSerial()
@@ -288,6 +285,6 @@ while not motor_serial.shutdown_now:
         stop_robot(tstep)
     else:
         print("Driving")
-        which_wheel(FORWARDS, tstep)
+        drive_centered(FORWARDS, tstep)
 
 print("Bye!")
