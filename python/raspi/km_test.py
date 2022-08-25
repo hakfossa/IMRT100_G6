@@ -15,7 +15,7 @@ LEFT = -1
 RIGHT = 1
 FORWARDS = 1
 BACKWARDS = -1
-DRIVING_SPEED = 100
+DRIVING_SPEED = 50
 TURNING_SPEED = 100
 STOP_DISTANCE = 25
 ROBOT_WIDTH = 0.40 # metres
@@ -238,8 +238,8 @@ def drive_centered(direction, duration):
     speed = DRIVING_SPEED * direction
     iterations = int(duration*10)
     for i in range(iterations):
-        r_coeff = int((avg_l() / avg_r()) *5)
         l_coeff = int((avg_r() / avg_l()) *5)
+        r_coeff = int((avg_l() / avg_r()) *5)
         motor_serial.send_command(l_coeff * speed, -r_coeff * speed)
         time.sleep(tstep)
 
