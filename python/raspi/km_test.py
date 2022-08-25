@@ -238,8 +238,8 @@ def drive_centered(direction, duration):
     speed = DRIVING_SPEED * direction
     iterations = int(duration*10)
     for i in range(iterations):
-        r_coeff = float(avg_l() / avg_r())
-        l_coeff = float(avg_r() / avg_l())
+        r_coeff = avg_l() / avg_r()
+        l_coeff = avg_r() / avg_l()
         motor_serial.send_command(l_coeff * speed, -r_coeff * speed)
         time.sleep(tstep)
 
