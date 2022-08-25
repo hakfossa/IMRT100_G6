@@ -4,6 +4,7 @@ import signal
 import time
 import sys
 import random
+import math
 from turtle import width
 
 # Homebrew modules
@@ -238,9 +239,9 @@ def drive_centered(direction, duration):
     speed = DRIVING_SPEED * direction
     iterations = int(duration*10)
     for i in range(iterations):
-        l_coeff = int((avg_r() / avg_l()) *5)
-        r_coeff = int((avg_l() / avg_r()) *5)
-        motor_serial.send_command(l_coeff * speed, r_coeff * speed)
+        l_coeff = int((avg_r()/avg_l())*10)
+        r_coeff = int((avg_l()/avg_r())*10)
+        motor_serial.send_command(l_coeff + speed, r_coeff + speed)
         time.sleep(tstep)
 
 # Create motor serial object
