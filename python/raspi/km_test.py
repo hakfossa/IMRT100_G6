@@ -22,6 +22,19 @@ STOP_DISTANCE = 25
 tfreq = 10 # Timer Frequency, Execution frequency in Hz
 tstep = 1/tfreq # Timer Step length
 
+
+
+###########################################
+#   _____                                 #
+#  /  ___|                                #
+#  \ `--.  ___ _ __  ___  ___  _ __ ___   #
+#   `--. \/ _ \ '_ \/ __|/ _ \| '__/ __|  #
+#  /\__/ /  __/ | | \__ \ (_) | |  \__ \  #
+#  \____/ \___|_| |_|___/\___/|_|  |___/  #
+#                                         #
+# v v v v v v v v v v v v v v v v v v v v #
+###########################################
+
 # Setup buffers for dampening/averages
 DX_fwd = []
 DX_bck = []
@@ -33,48 +46,12 @@ DX_l = []
 # A higher value means more dampening over longer time.
 DXlength = 20
 
-# Sneerp Snoorp
-
 # Go through the sensors and give them an appropriate amount of nothing
 sensor_list = [DX_fwd,DX_bck,DX_r,DX_l]
 for sensor in sensor_list:
     for i in range(DXlength):
         sensor.append(255)
 print("Sensor arrays filled with gibberish")
-
-
-# Motile functions
-def stop_robot(duration):
-    iterations = int(duration * 10)
-
-    for i in range(iterations):
-        motor_serial.send_command(0,0)
-        time.sleep(tstep)
-
-def drive_robot(direction, duration):
-    speed = DRIVING_SPEED * direction
-    iterations = int(duration * 10)
-
-    for i in range(iterations):
-        motor_serial.send_command(speed,speed)
-        time.sleep(tstep)
-
-def turn_robot(direction, duration):
-    motor_serial.send_command(TURNING_SPEED * direction, -TURNING_SPEED * direction)
-    time.sleep(tstep)
-
-# Create motor serial object
-motor_serial = imrt_robot_serial.IMRTRobotSerial()
-
-# Open serial port. Exit if serial port cannot be opened
-try:
-    motor_serial.connect("/dev/ttyUSB0")
-except:
-    print("Could not open port. Is your robot connected?\nExiting program")
-    sys.exit()
-
-# Start serial receive thread
-motor_serial.run()
 
 # Functions retrieve sensor data
 def sense_fwd():
@@ -146,21 +123,80 @@ def avg_update():
         print("L scrapped from average")
     DX_l.pop(0)
 
-# Executive lööp
+
+
+#####################################
+#  ___  ___      _                  #
+#  |  \/  |     | |                 #
+#  | .  . | ___ | |_ ___  _ __ ___  #
+#  | |\/| |/ _ \| __/ _ \| '__/ __| #
+#  | |  | | (_) | || (_) | |  \__ \ #
+#  \_|  |_/\___/ \__\___/|_|  |___/ #
+#                                   #
+# v v v v v v v v v v v v v v v v v #
+#####################################
+
+# Drive functions
+def stop_robot(duration):
+    iterations = int(duration * 10)
+
+    for i in range(iterations):
+        motor_serial.send_command(0,0)
+        time.sleep(tstep)
+
+def drive_robot(direction, duration):
+    speed = DRIVING_SPEED * direction
+    iterations = int(duration * 10)
+
+    for i in range(iterations):
+        motor_serial.send_command(speed,speed)
+        time.sleep(tstep)
+
+def turn_robot(direction, duration):
+    motor_serial.send_command(TURNING_SPEED * direction, -TURNING_SPEED * direction)
+    time.sleep(tstep)
+
+# Create motor serial object
+motor_serial = imrt_robot_serial.IMRTRobotSerial()
+
+# Open serial port. Exit if serial port cannot be opened
+try:
+    motor_serial.connect("/dev/ttyUSB0")
+except:
+    print("Could not open port. Is your robot connected?\nExiting program")
+    sys.exit()
+
+# Start serial receive thread
+motor_serial.run()
+
+
+
+#############################
+#  _                        #
+# | |                       #
+# | |     ___   ___  _ __   #
+# | |    / _ \ / _ \| '_ \  #
+# | |___| (_) | (_) | |_) | #
+# \_____/\___/ \___/| .__/  #
+#                   | |     #
+# v v v v v v v v v |_| v v #
+#############################
+
+# Main loop
 print("Entering loop. Ctrl+c to terminate")
 while not motor_serial.shutdown_now:
 
     avg_update()
 
-#    print(" FWD:",round(sense_fwd(),1),"BCK:",round(sense_bck(),1),"R:",(round(sense_r(),1),"L:",round(sense_l(),1)))
-#    print("aFWD:",round(avg_fwd(),1),"aBCK:",round(avg_bck(),1),"aR:",round(avg_r(),1),"aL:",round(avg_l(),1))
+    print(" FWD:",round(sense_fwd(),1),"BCK:",round(sense_bck(),1),"R:",(round(sense_r(),1),"L:",round(sense_l(),1)))
+    print("aFWD:",round(avg_fwd(),1),"aBCK:",round(avg_bck(),1),"aR:",round(avg_r(),1),"aL:",round(avg_l(),1))
 
     # Obstacle check
     if sense_fwd() < STOP_DISTANCE:
-        print("halt")
+        print("Holding")
         stop_robot(tstep)
     else:
-        print("go")
+        print("Driving")
         drive_robot(FORWARDS, tstep)
 
 print("Bye!")
