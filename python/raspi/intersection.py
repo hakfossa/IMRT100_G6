@@ -19,4 +19,7 @@ class Intersection():
         child.set_direction(direction)
 
     def set_direction(self, direction):
+        
 
+
+        
