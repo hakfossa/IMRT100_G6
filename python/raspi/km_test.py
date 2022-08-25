@@ -272,7 +272,7 @@ while not motor_serial.shutdown_now:
 #        print("Holding")
 #        stop_robot(tstep)
 #    else:
-        print("Driving")
-        drive_robot(BACKWARDS, tstep)
+    print("Driving")
+    drive_robot(BACKWARDS, tstep)
 
 print("Bye!")
