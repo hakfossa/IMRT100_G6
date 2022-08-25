@@ -120,7 +120,7 @@ def chg_l():
         chg_l = 0
     return chg_l
 
-def magnitude(arg)):
+def magnitude(arg):
     if arg > 0:
         magnitude = 1
     else:
