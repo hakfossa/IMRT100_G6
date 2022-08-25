@@ -6,6 +6,7 @@ import sys
 import random
 import math
 import operator
+import keyboard
 from turtle import width
 
 # Homebrew modules
@@ -271,6 +272,14 @@ motor_serial.run()
 #                   | |     #
 # v v v v v v v v v |_| v v #
 #############################
+
+def check_abort()
+    try:  # Try such that other keypresses will not generate errors
+        if keyboard.is_pressed('q'):
+            print('You Pressed A Key!')
+            quit()
+    except:
+        # Nothing happens if another key was pressed
 
 # Main loop
 print("Entering loop. Ctrl+c to terminate")
