@@ -23,6 +23,9 @@ TURNING_SPEED = 100
 STOP_DISTANCE = 15
 ROBOT_WIDTH = 0.40 # metres
 
+turning_r = False
+turning_l = False
+
 tfreq = 10 # Timer Frequency, Execution frequency in Hz
 tstep = 1/tfreq # Timer Step length
 
@@ -249,6 +252,19 @@ def drive_centered(direction, duration):
         motor_serial.send_command(l_coeff + speed, r_coeff + speed)
         time.sleep(tstep)
 
+def check_turn_l():
+    if chg_l() > 10 or original_fwd - sense_r() < 5:
+        turning_l = True
+    else:
+        turning_l = False
+
+def check_turn_r():
+    if chg_r() > 10 or original_fwd - sense_l() < 5:
+        turning_r = True
+    else:
+        turning_r = False
+
+
 # Create motor serial object
 motor_serial = imrt_robot_serial.IMRTRobotSerial()
 
@@ -308,13 +324,18 @@ while not motor_serial.shutdown_now:
         original_fwd = sense_fwd()
         drive_robot(FORWARDS,1)
         if chg_r() < -50:
-            if chg_r() > 10 or original_fwd - sense_l() < 5:
-                #check_abort()
-                turn_robot(RIGHT,tstep)
+            turning_r = True
         else:
-            if chg_l() > 10 or original_fwd - sense_r() < 5:
-                #check_abort()
-                turn_robot(LEFT,tstep)
+            turning_l = True
+    
+    elif turning_r:
+        turning_r()
+        turn_robot(RIGHT, tstep)
+    
+    elif turning_l:
+        turning_l()
+        turn_robot(LEFT, tstep)
+
     else:
         print("Driving")
         drive_centered(FORWARDS, tstep)
