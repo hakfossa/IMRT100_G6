@@ -7,7 +7,7 @@ import random
 import math
 import operator
 import keyboard
-from turtle import width
+
 
 # Homebrew modules
 import imrt_robot_serial
@@ -278,7 +278,10 @@ def check_abort():
         if keyboard.is_pressed('q'):
             print('Terminating')
             stop_robot(tstep)
-            quit()
+            sys.exit()
+
+    except SystemExit:
+        sys.exit()  
     except:
         pass
         # Nothing happens if another key was pressed
