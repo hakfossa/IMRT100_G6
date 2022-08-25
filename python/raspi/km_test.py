@@ -288,15 +288,15 @@ while not motor_serial.shutdown_now:
     if sense_fwd() < STOP_DISTANCE:
         print("Holding")
         stop_robot(tstep)
-    elif change_r<-50 or change_l<-50:
+    elif chg_r()<-50 or chg_l()<-50:
         print("Turning")
         original_fwd = sense_fwd()
         drive_robot(FORWARDS,3)
-        if change_r < -50:
-            while change_r > 10 or original_fwd - sense_l() < 5 :
+        if chg_r() < -50:
+            while chg_r() > 10 or original_fwd - sense_l() < 5 :
                 turn_robot(RIGHT,1)
         else:
-            while change_l > 10 or original_fwd - sense_r() < 5:
+            while chg_l() > 10 or original_fwd - sense_r() < 5:
                 turn_robot(LEFT,1)
     else:
         print("Driving")
