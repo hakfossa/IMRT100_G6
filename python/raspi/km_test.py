@@ -54,7 +54,7 @@ DXlength = 20
 chgbuffer_length = 10
 
 # We accept X units as error before assuming a change has happened.
-changethresh = 3
+changethresh = 1
 
 # Go through the buffers and give them an appropriate amount of nothing
 sensor_list = [DX_fwd,DX_bck,DX_r,DX_l]
