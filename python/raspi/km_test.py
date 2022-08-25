@@ -98,22 +98,26 @@ def avg_l():
 # Functions that retrieve change in sensor avges
 def chg_fwd():
     chg_fwd = change_fwd[chgbuffer_length] - change_fwd[0]
-    if abs(chg_fwd) > changethresh:
+    if abs(chg_fwd) < changethresh:
+        chg_fwd = 0
     return chg_fwd
 
 def chg_bck():
     chg_bck = change_bck[chgbuffer_length] - change_bck[0]
-    if abs(chg_bck) > changethresh:
+    if abs(chg_bck) < changethresh:
+        chg_bck = 0
     return chg_bck
 
 def chg_r():
     chg_r = change_r[chgbuffer_length] - change_r[0]
-    if abs(chg_r) > changethresh:
+    if abs(chg_r) < changethresh:
+        chg_r = 0
     return chg_r
 
 def chg_l():
     chg_l = change_l[chgbuffer_length] - change_l[0]
-    if abs(chg_l) > changethresh:
+    if abs(chg_l) < changethresh:
+        chg_l = 0
     return chg_l
 
 def magnitude(arg)):
