@@ -124,7 +124,7 @@ def chg_l():
 def magnitude(arg):
     if arg > 0:
         magnitude = 1
-    elif arg = 0:
+    elif arg == 0:
         magnitude = 0
     else:
         magnitude = -1
