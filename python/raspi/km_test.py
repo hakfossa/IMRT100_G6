@@ -306,7 +306,7 @@ while not motor_serial.shutdown_now:
     elif chg_r()<-50 or chg_l()<-50:
         print("Turning")
         original_fwd = sense_fwd()
-        drive_robot(FORWARDS,3)
+        drive_robot(FORWARDS,1)
         if chg_r() < -50:
             if chg_r() > 10 or original_fwd - sense_l() < 5:
                 #check_abort()
