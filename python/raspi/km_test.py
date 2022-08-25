@@ -57,10 +57,10 @@ change_l = []
 # Effectively the latter has this parameter for "how long ago do I
 # compare the current data with to see if stuff is changing", 10=1s.
 DXlength = 20
-chgbuffer_length = 5
+chgbuffer_length = 10
 
 # We accept X units as error before assuming a change has happened.
-changethresh = 7
+changethresh = 3
 
 # Go through the buffers and give them an appropriate amount of nothing
 sensor_list = [DX_fwd,DX_bck,DX_r,DX_l]
