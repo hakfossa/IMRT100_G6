@@ -147,21 +147,19 @@ def avg_update():
     DX_l.pop(0)
 
 # Executive lööp
+print("Entering loop. Ctrl+c to terminate")
 while not motor_serial.shutdown_now:
-    drive_robot(BACKWARDS,tstep)
 
-#    avg_update()
-#    sense_fwd()
+    avg_update()
 
 #    print(" FWD:",round(sense_fwd(),1),"BCK:",round(sense_bck(),1),"R:",(round(sense_r(),1),"L:",round(sense_l(),1)))
 #    print("aFWD:",round(avg_fwd(),1),"aBCK:",round(avg_bck(),1),"aR:",round(avg_r(),1),"aL:",round(avg_l(),1))
-#    time.sleep(tstep)
 
     # Obstacle check
-#    if avg_fwd() < STOP_DISTANCE:
-#        print("halt")
-#        stop_robot(tstep)
-#    else:
-#        drive_robot(FORWARDS, tstep)
+    if sense_fwd() < STOP_DISTANCE:
+        print("halt")
+        stop_robot(tstep)
+    else:
+        drive_robot(FORWARDS, tstep)
 
 print("Bye!")
