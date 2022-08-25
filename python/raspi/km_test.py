@@ -30,8 +30,8 @@ DX_l = []
 
 # Setup how many recordings should be kept in memory at once.
 # Recordings happen once every tstep miliseconds.
-# A higher value means more dampening against sudden change.
-DXlength = 60
+# A higher value means more dampening over longer time.
+DXlength = 20
 
 # Sneerp Snoorp
 
