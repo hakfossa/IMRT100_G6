@@ -160,6 +160,7 @@ while not motor_serial.shutdown_now:
         print("halt")
         stop_robot(tstep)
     else:
+        print("go")
         drive_robot(FORWARDS, tstep)
 
 print("Bye!")
