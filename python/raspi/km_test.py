@@ -19,7 +19,7 @@ DRIVING_SPEED = 100
 TURNING_SPEED = 100
 STOP_DISTANCE = 25
 
-tfreq = 20 # Timer Frequency, Execution frequency in Hz
+tfreq = 10 # Timer Frequency, Execution frequency in Hz
 tstep = 1/tfreq # Timer Step length
 
 # Setup buffers for dampening/averages
