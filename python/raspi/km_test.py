@@ -308,11 +308,11 @@ while not motor_serial.shutdown_now:
         original_fwd = sense_fwd()
         drive_robot(FORWARDS,3)
         if chg_r() < -50:
-            while chg_r() > 10 or original_fwd - sense_l() < 5:
+            if chg_r() > 10 or original_fwd - sense_l() < 5:
                 check_abort()
                 turn_robot(RIGHT,tstep)
         else:
-            while chg_l() > 10 or original_fwd - sense_r() < 5:
+            if chg_l() > 10 or original_fwd - sense_r() < 5:
                 check_abort()
                 turn_robot(LEFT,tstep)
     else:
