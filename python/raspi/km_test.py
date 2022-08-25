@@ -240,7 +240,7 @@ def drive_centered(direction, duration):
     for i in range(iterations):
         l_coeff = int((avg_r() / avg_l()) *5)
         r_coeff = int((avg_l() / avg_r()) *5)
-        motor_serial.send_command(l_coeff * speed, -r_coeff * speed)
+        motor_serial.send_command(l_coeff * speed, r_coeff * speed)
         time.sleep(tstep)
 
 # Create motor serial object
