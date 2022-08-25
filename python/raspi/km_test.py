@@ -23,8 +23,8 @@ TURNING_SPEED = 100
 STOP_DISTANCE = 15
 ROBOT_WIDTH = 0.40 # metres
 
-turning_r = False
-turning_l = False
+TURNING_R = False
+TURNING_L = False
 
 tfreq = 10 # Timer Frequency, Execution frequency in Hz
 tstep = 1/tfreq # Timer Step length
@@ -254,15 +254,15 @@ def drive_centered(direction, duration):
 
 def check_turn_l():
     if chg_l() > 10 or original_fwd - sense_r() < 5:
-        turning_l = True
+        TURNING_L = True
     else:
-        turning_l = False
+        TURNING_L = False
 
 def check_turn_r():
     if chg_r() > 10 or original_fwd - sense_l() < 5:
-        turning_r = True
+        TURNING_R = True
     else:
-        turning_r = False
+        TURNING_R = False
 
 
 # Create motor serial object
@@ -319,22 +319,23 @@ while not motor_serial.shutdown_now:
     if sense_fwd() < STOP_DISTANCE:
         print("Holding")
         stop_robot(tstep)
+
+    elif TURNING_R:
+        check_turn_r()
+        turn_robot(RIGHT, tstep)
+    
+    elif TURNING_L:
+        check_turn_l()
+        turn_robot(LEFT, tstep)
+    
     elif chg_r()<-50 or chg_l()<-50:
         print("Turning")
         original_fwd = sense_fwd()
         drive_robot(FORWARDS,1)
         if chg_r() < -50:
-            turning_r = True
+            TURNING_R = True
         else:
-            turning_l = True
-    
-    elif turning_r:
-        turning_r()
-        turn_robot(RIGHT, tstep)
-    
-    elif turning_l:
-        turning_l()
-        turn_robot(LEFT, tstep)
+            TURNING_L = True
 
     else:
         print("Driving")
