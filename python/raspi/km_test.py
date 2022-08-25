@@ -222,11 +222,28 @@ def drive_robot(direction, duration):
         motor_serial.send_command(speed,speed)
         time.sleep(tstep)
 
+def which_wheel(direction, duration):
+    speed = DRIVING_SPEED * direction
+    iterations = int(duration * 10)
+
+    for i in range(iterations):
+        motor_serial.send_command(speed,0)
+        time.sleep(tstep)
+
 def turn_robot(direction, duration):
     motor_serial.send_command(TURNING_SPEED * direction, -TURNING_SPEED * direction)
     time.sleep(tstep)
 
-# Drive in arc
+# Drive centered
+
+# Take inputs from either side, compare them.
+# If they're equidistant within a margin, you're OK;
+# check change on each, adjust motor balance to 
+
+#def drive_centered(direction, duration):
+#    speed = DRIVING_SPEED *
+#    motor_serial.send_command(r_balance * direction, -l_balance * direction)
+
 
 
 # Create motor serial object
@@ -241,8 +258,6 @@ except:
 
 # Start serial receive thread
 motor_serial.run()
-
-
 
 #############################
 #  _                        #
@@ -262,17 +277,17 @@ while not motor_serial.shutdown_now:
     avg_update()
     change_update()
 
-    print("aFWD:",round(avg_fwd()),"chg_fwd:",round(chg_fwd(),1),"magnitude.chg_fwd:",magnitude(chg_fwd()))
+#    print("aFWD:",round(avg_fwd()),"chg_fwd:",round(chg_fwd(),1),"magnitude.chg_fwd:",magnitude(chg_fwd()))
 
 #    print(" FWD:",round(sense_fwd(),1),"BCK:",round(sense_bck(),1),"R:",(round(sense_r(),1),"L:",round(sense_l(),1)))
 #    print("aFWD:",round(avg_fwd(),1),"aBCK:",round(avg_bck(),1),"aR:",round(avg_r(),1),"aL:",round(avg_l(),1))
 
     # Obstacle check
-#    if sense_fwd() < STOP_DISTANCE:
-#        print("Holding")
-#        stop_robot(tstep)
-#    else:
+    if sense_fwd() < STOP_DISTANCE:
+        print("Holding")
+        stop_robot(tstep)
+    else:
     print("Driving")
-    drive_robot(BACKWARDS, tstep)
+    which_wheel(FORWARDS, tstep)
 
 print("Bye!")
