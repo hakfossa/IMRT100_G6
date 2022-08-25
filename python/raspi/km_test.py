@@ -290,7 +290,7 @@ def check_abort():
 print("Entering loop. Ctrl+c to terminate")
 while not motor_serial.shutdown_now:
 
-    check_abort()
+    #check_abort()
     avg_update()
     change_update()
 
@@ -309,11 +309,11 @@ while not motor_serial.shutdown_now:
         drive_robot(FORWARDS,3)
         if chg_r() < -50:
             if chg_r() > 10 or original_fwd - sense_l() < 5:
-                check_abort()
+                #check_abort()
                 turn_robot(RIGHT,tstep)
         else:
             if chg_l() > 10 or original_fwd - sense_r() < 5:
-                check_abort()
+                #check_abort()
                 turn_robot(LEFT,tstep)
     else:
         print("Driving")
