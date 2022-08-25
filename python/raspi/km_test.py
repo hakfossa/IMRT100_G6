@@ -45,14 +45,16 @@ print("Sensor arrays filled with gibberish")
 
 # Motile functions
 def stop_robot(duration):
-    iterations=int(duration*10)
+    iterations = int(duration * 10)
+
     for i in range(iterations):
         motor_serial.send_command(0,0)
-    time.sleep(tstep)
+        time.sleep(tstep)
 
 def drive_robot(direction, duration):
     speed = DRIVING_SPEED * direction
-    iterations=int(duration*10)
+    iterations = int(duration * 10)
+
     for i in range(iterations):
         motor_serial.send_command(speed,speed)
         time.sleep(tstep)
