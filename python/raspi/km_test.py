@@ -280,6 +280,7 @@ def check_abort()
             stop_robot(tstep)
             quit()
     except:
+        pass
         # Nothing happens if another key was pressed
 
 # Main loop
