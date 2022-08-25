@@ -275,8 +275,9 @@ motor_serial.run()
 
 def check_abort()
     try:  # Try such that other keypresses will not generate errors
-        if keyboard.is_pressed('q'):
-            print('You Pressed A Key!')
+        if keyboard.is_pressed('esc'):
+            print('Terminating')
+            stop_robot(tstep)
             quit()
     except:
         # Nothing happens if another key was pressed
@@ -285,6 +286,7 @@ def check_abort()
 print("Entering loop. Ctrl+c to terminate")
 while not motor_serial.shutdown_now:
 
+    check_abort()
     avg_update()
     change_update()
 
