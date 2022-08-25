@@ -18,6 +18,7 @@ BACKWARDS = -1
 DRIVING_SPEED = 100
 TURNING_SPEED = 100
 STOP_DISTANCE = 25
+ROBOT_WIDTH = 0.40 # metres
 
 tfreq = 10 # Timer Frequency, Execution frequency in Hz
 tstep = 1/tfreq # Timer Step length
@@ -35,13 +36,13 @@ tstep = 1/tfreq # Timer Step length
 # v v v v v v v v v v v v v v v v v v v v #
 ###########################################
 
-# Setup buffers for dampening/averages
+# Setup buffers for recent average smoothing of sensor data.
 DX_fwd = []
 DX_bck = []
 DX_r = []
 DX_l = []
 
-# Setup buffers for tracking increase/decrease in 
+# Setup buffers for tracking increase/decrease in sensor data.
 change_fwd = []
 change_bck = []
 change_r = []
@@ -50,8 +51,13 @@ change_l = []
 # Setup how many recordings should be kept in memory at once.
 # Recordings happen once every tstep miliseconds.
 # A higher value means more dampening over longer time.
+# DXlength is for the buffer dealing with sensor data smoothing,
+# chgbuffer_length is the buffer dealing with changes in sensor data.
+# 
+# Effectively the latter has this parameter for "how long ago do I
+# compare the current data with to see if stuff is changing", 10=1s.
 DXlength = 20
-chgbuffer_length = 10
+chgbuffer_length = 3
 
 # We accept X units as error before assuming a change has happened.
 changethresh = 1
@@ -67,7 +73,7 @@ for buffer in chgbuffer_list:
         buffer.append(255)
 print("Buffers filled with gibberish.")
 
-# Functions retrieve sensor data
+# Functions that retrieve sensor data:
 def sense_fwd():
     dist_fwd = motor_serial.get_dist_1()
     return dist_fwd
@@ -81,7 +87,7 @@ def sense_l():
     dist_l = motor_serial.get_dist_4()
     return dist_l
 
-# Functions that retrieve sensor avges
+# Functions that output dampened (= recent average of) sensor data:
 def avg_fwd():
     avg_dist_fwd = sum(DX_fwd)/DXlength
     return avg_dist_fwd
@@ -95,10 +101,10 @@ def avg_l():
     avg_dist_l = sum(DX_l)/DXlength
     return avg_dist_l
 
-# Functions that retrieve change in sensor avges
+# Functions that check for change in the dampened sensor data:
 def chg_fwd():
-    chg_fwd = change_fwd[chgbuffer_length-1] - change_fwd[0]
-    if abs(chg_fwd) < changethresh:
+    chg_fwd = change_fwd[chgbuffer_length-1] - change_fwd[0] # Now vs X ms ago
+    if abs(chg_fwd) < changethresh: # Tiny changes are sensor fluctuation and we disregard them
         chg_fwd = 0
     return chg_fwd
 
@@ -120,7 +126,8 @@ def chg_l():
         chg_l = 0
     return chg_l
 
-# Define magnitude of something
+# Function that tells us if the magnitude of something is 1/0/-1,
+# intended for checking magnitude of change but really it'll take whatever
 def magnitude(arg):
     if arg > 0:
         magnitude = 1
@@ -130,26 +137,36 @@ def magnitude(arg):
         magnitude = -1
     return magnitude
 
-# Threshold for scrapping data on its way into the average, in approximate cm*s^-1
+# Threshold for scrapping data on its way into the average, set to higher
+# than our sensor range because coding this as badly as I did was a mistake.
+# Effectively its function is to neutralize spaghetti code.
 avg_threshold = 300
 
+# Function that updates the change-in-dampened-data buffer
 def change_update():
-    change_fwd.append(avg_fwd())
-    change_fwd.pop(0)
+    change_fwd.append(avg_fwd())    # Add newest value
+    change_fwd.pop(0)               # Wipe oldest value
+    change_bck.append(avg_bck())
+    change_bck.pop(0)
+    change_r.append(avg_r())
+    change_r.pop(0)
+    change_l.append(avg_l())
+    change_l.pop(0)
 
-# Update indices for recent values
+
+# Function that updates the dampening buffers
 def avg_update():    
     current_fwd = sense_fwd()
-    # If diff between value and previous avg is more than x,
+    # If the difference between value and previous avg is more than x,
     # discard newest value and repeat 2nd most recent value instead.
-    # This function is effectively disabled because avg_threshold>255,
-    # which is on purpose because it kind of sucked ass and threw out all my values.
+    # 
+    # This function is disabled via avg_threshold>255, which again is
+    # on purpose because it kind of sucked ass and broke the dampening.
     if abs((sum(DX_fwd)/DXlength) - current_fwd) < avg_threshold:
         DX_fwd.append(current_fwd)
     else:
         DX_fwd.append(DX_fwd[DXlength-1])
         print("FWD scrapped from average")
-    # Delete oldest value
     DX_fwd.pop(0)
 
     current_bck = sense_bck()
@@ -189,7 +206,7 @@ def avg_update():
 # v v v v v v v v v v v v v v v v v #
 #####################################
 
-# Drive functions
+# Functions that make the robot go places
 def stop_robot(duration):
     iterations = int(duration * 10)
 
@@ -208,6 +225,9 @@ def drive_robot(direction, duration):
 def turn_robot(direction, duration):
     motor_serial.send_command(TURNING_SPEED * direction, -TURNING_SPEED * direction)
     time.sleep(tstep)
+
+# Drive in arc
+
 
 # Create motor serial object
 motor_serial = imrt_robot_serial.IMRTRobotSerial()
