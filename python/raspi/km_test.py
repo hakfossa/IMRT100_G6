@@ -41,17 +41,31 @@ DX_bck = []
 DX_r = []
 DX_l = []
 
+# Setup buffers for tracking increase/decrease in 
+change_fwd = []
+change_bck = []
+change_r = []
+change_l = []
+
 # Setup how many recordings should be kept in memory at once.
 # Recordings happen once every tstep miliseconds.
 # A higher value means more dampening over longer time.
 DXlength = 20
+chgbuffer_length = 10
 
-# Go through the sensors and give them an appropriate amount of nothing
+# We accept X units as error before assuming a change has happened.
+changethresh = 3
+
+# Go through the buffers and give them an appropriate amount of nothing
 sensor_list = [DX_fwd,DX_bck,DX_r,DX_l]
 for sensor in sensor_list:
     for i in range(DXlength):
         sensor.append(255)
-print("Sensor arrays filled with gibberish")
+chgbuffer_list = [change_fwd,change_bck,change_r,change_l]
+for buffer in chgbuffer_list:
+    for i in range(chgbuffer_length):
+        buffer.append(255)
+print("Buffers filled with gibberish.")
 
 # Functions retrieve sensor data
 def sense_fwd():
@@ -67,7 +81,7 @@ def sense_l():
     dist_l = motor_serial.get_dist_4()
     return dist_l
 
-# Functions that retrieve sensor data & avges
+# Functions that retrieve sensor avges
 def avg_fwd():
     avg_dist_fwd = sum(DX_fwd)/DXlength
     return avg_dist_fwd
@@ -81,8 +95,49 @@ def avg_l():
     avg_dist_l = sum(DX_l)/DXlength
     return avg_dist_l
 
+# Functions that retrieve change in sensor avges
+def chg_fwd():
+    chg_fwd = change_fwd[chgbuffer_length] - change_fwd[0]
+    if abs(chg_fwd) > changethresh:
+        if chg_fwd > 0:
+            mag_chg_fwd = 1
+        elif chg_fwd < 0:
+            mag_chg_fwd = -1
+    return chg_fwd, mag_chg_fwd
+
+def chg_bck():
+    chg_bck = change_bck[chgbuffer_length] - change_bck[0]
+    if abs(chg_bck) > changethresh:
+        if chg_bck > 0:
+            mag_chg_bck = 1
+        elif chg_bck < 0:
+            mag_chg_bck = -1
+    return chg_bck, mag_chg_bck
+
+def chg_r():
+    chg_r = change_r[chgbuffer_length] - change_r[0]
+    if abs(chg_r) > changethresh:
+        if chg_r > 0:
+            mag_chg_r = 1
+        elif chg_r < 0:
+            mag_chg_r = -1
+    return chg_r, mag_chg_r
+
+def chg_l():
+    chg_l = change_l[chgbuffer_length] - change_l[0]
+    if abs(chg_l) > changethresh:
+        if chg_l > 0:
+            mag_chg_l = 1
+        elif chg_l < 0:
+            mag_chg_l = -1
+    return chg_l, mag_chg_l
+
 # Threshold for scrapping data on its way into the average, in approximate cm*s^-1
 avg_threshold = 300
+
+def change_update():
+    change_fwd.append(avg_fwd())
+    change_fwd.pop(0)
 
 # Update indices for recent values
 def avg_update():    
