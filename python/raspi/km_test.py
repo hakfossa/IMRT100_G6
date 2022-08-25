@@ -273,13 +273,14 @@ motor_serial.run()
 # v v v v v v v v v |_| v v #
 #############################
 
-def check_abort()
+def check_abort():
     try:  # Try such that other keypresses will not generate errors
-        if keyboard.is_pressed('esc'):
+        if keyboard.is_pressed('q'):
             print('Terminating')
             stop_robot(tstep)
             quit()
     except:
+        pass
         # Nothing happens if another key was pressed
 
 # Main loop
