@@ -99,38 +99,28 @@ def avg_l():
 def chg_fwd():
     chg_fwd = change_fwd[chgbuffer_length] - change_fwd[0]
     if abs(chg_fwd) > changethresh:
-        if chg_fwd > 0:
-            mag_chg_fwd = 1
-        elif chg_fwd < 0:
-            mag_chg_fwd = -1
-    return chg_fwd, mag_chg_fwd
+    return chg_fwd
 
 def chg_bck():
     chg_bck = change_bck[chgbuffer_length] - change_bck[0]
     if abs(chg_bck) > changethresh:
-        if chg_bck > 0:
-            mag_chg_bck = 1
-        elif chg_bck < 0:
-            mag_chg_bck = -1
-    return chg_bck, mag_chg_bck
+    return chg_bck
 
 def chg_r():
     chg_r = change_r[chgbuffer_length] - change_r[0]
     if abs(chg_r) > changethresh:
-        if chg_r > 0:
-            mag_chg_r = 1
-        elif chg_r < 0:
-            mag_chg_r = -1
-    return chg_r, mag_chg_r
+    return chg_r
 
 def chg_l():
     chg_l = change_l[chgbuffer_length] - change_l[0]
     if abs(chg_l) > changethresh:
-        if chg_l > 0:
-            mag_chg_l = 1
-        elif chg_l < 0:
-            mag_chg_l = -1
-    return chg_l, mag_chg_l
+    return chg_l
+
+def magnitude(arg)):
+    if arg > 0:
+        magnitude = 1
+    else: magnitude = -1
+    return magnitude
 
 # Threshold for scrapping data on its way into the average, in approximate cm*s^-1
 avg_threshold = 300
@@ -243,6 +233,8 @@ while not motor_serial.shutdown_now:
 
     avg_update()
     change_update()
+
+    print("aFWD:",round(avg_fwd()),"chg_fwd:",chg_fwd(),"magnitude.chg_fwd:",magnitude(chg_fwd()))
 
 #    print(" FWD:",round(sense_fwd(),1),"BCK:",round(sense_bck(),1),"R:",(round(sense_r(),1),"L:",round(sense_l(),1)))
 #    print("aFWD:",round(avg_fwd(),1),"aBCK:",round(avg_bck(),1),"aR:",round(avg_r(),1),"aL:",round(avg_l(),1))
