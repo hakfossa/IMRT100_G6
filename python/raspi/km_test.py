@@ -268,11 +268,11 @@ while not motor_serial.shutdown_now:
 #    print("aFWD:",round(avg_fwd(),1),"aBCK:",round(avg_bck(),1),"aR:",round(avg_r(),1),"aL:",round(avg_l(),1))
 
     # Obstacle check
-    if sense_fwd() < STOP_DISTANCE:
-        print("Holding")
-        stop_robot(tstep)
-    else:
+#    if sense_fwd() < STOP_DISTANCE:
+#        print("Holding")
+#        stop_robot(tstep)
+#    else:
         print("Driving")
-        drive_robot(FORWARDS, tstep)
+        drive_robot(BACKWARDS, tstep)
 
 print("Bye!")
