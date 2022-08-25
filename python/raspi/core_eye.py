@@ -158,6 +158,7 @@ class Eyelid(pygame.sprite.Sprite):
             self.rect.centery > screenY*1.5)):
                 self.speed = 0
                 self.blinking = False
+                self.squinting = False
 
 
             else:
