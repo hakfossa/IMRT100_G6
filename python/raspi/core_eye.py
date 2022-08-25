@@ -80,8 +80,8 @@ class Core_eye(pygame.sprite.Sprite):
 
     
     def jitter(self):
-        x_random = random.randint(-2, 2)
-        y_random = random.randint(-2, 2)
+        x_random = random.randint(-1, 1)
+        y_random = random.randint(-1, 1)
         self.x += x_random
         self.y += y_random
         
@@ -96,7 +96,7 @@ class Core_eye(pygame.sprite.Sprite):
         rad = 2*pi * angle/36
         self.speed_x = cos(rad)*self._SPEED*2
         self.speed_y = sin(rad)*self._SPEED
-        print("angle:", angle)
+        #print("angle:", angle)
 
 
     def check_move(self):
@@ -120,35 +120,104 @@ class Eyelid(pygame.sprite.Sprite):
     
     def __init__(self, upper=True):
         super().__init__()
-        self.upper = upper
+        if upper:
+            self.direction_modifier = 1
+        else:
+            self.direction_modifier = -1
 
         self.image = pygame.image.load('eyelid.png')
         self.rect = self.image.get_rect()
-        self.rect.center = (screenX/2, -screenY/2+50)
-        self.stationary = True
-        self.move_commands = []
+        self.rect.center = (screenX/2, screenY/2 - int(self.direction_modifier)*screenY)
+        self.speed = 0
+        self.opening = False
+        self.blinking = False
+        self.squinting = False
+        self.squint_timer = 0
+
 
 
     def update(self):
-        """ if self.stationary:
-            self.jitter() """
-        
+        if self.blinking or self.squinting:
+            if (self.blinking and
+            0 < self.rect.centery < screenY and 
+            not self.opening):
+                self.open_eye()
+                
+
+            elif (self.squinting and
+            -screenY/3 < self.rect.centery < screenY*1.3 and
+            not self.opening):
+                if self.squint_timer > 0:
+                    self.squint_timer -= 1
+                else:
+                    self.open_eye()
+                    
 
 
+            elif (self.opening and (self.rect.centery < -screenY/2 or
+            self.rect.centery > screenY*1.5)):
+                self.speed = 0
+                self.blinking = False
+
+
+            else:
+                self.rect.centery += self.speed*50
+
+            
 
 
     def draw(self, surface):
         surface.blit(self.image, self.rect)
 
-    def jitter(self):
-        y_random = random.randint(-1, 1)
-        self.rect.centery += y_random
+
+    def close_eye(self):
+        print("closing", self.direction_modifier)
+        self.opening = False
+        self.speed = self.direction_modifier
+
+
+    def open_eye(self):
+        self.opening = True
+        self.speed = self.direction_modifier*-1
+
+
+    def blink(self):
+        self.blinking = True
+        self.close_eye()
+
+
+    def squint(self, squint_time):
+        self.squinting = True
+        self.squint_timer = squint_time
+        self.close_eye()
+        
+class Eyelids():
+    
+    def __init__(self):
+        self.upper = Eyelid()
+        self.lower = Eyelid(False)
+
+    def update(self):
+        self.upper.update()
+        self.lower.update()
+
+    def draw(self, surface):
+        self.upper.draw(surface)
+        self.lower.draw(surface)
+
+    def blink(self):
+        self.upper.blink()
+        self.lower.blink()
+    
+    def squint(self):
+        squint_time = random.randint(30, 80)
+        self.upper.squint(squint_time)
+        self.lower.squint(squint_time)
 
 
 
 eye = Core_eye()
-upper = Eyelid()
-
+eyelids = Eyelids()
 
 
 while True:
@@ -172,13 +241,21 @@ while True:
                 else:
                     DISPLAY = pygame.display.set_mode((screenX, screenY), pygame.FULLSCREEN)
                     _fullscreen = True
+            
+            elif event.key == K_b:
+                eyelids.blink()
+            
+            
+            elif event.key == K_s:
+                print("s")
+                eyelids.squint()
     
     eye.update()
-    upper.update()
+    eyelids.update()
     
 
     DISPLAY.fill(BLACK)
     eye.draw(DISPLAY)
-    upper.draw(DISPLAY)
+    eyelids.draw(DISPLAY)
 
     FPS_CONTROLLER.tick(FPS)
