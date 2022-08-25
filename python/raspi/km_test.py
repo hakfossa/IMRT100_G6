@@ -119,7 +119,8 @@ def chg_l():
 def magnitude(arg)):
     if arg > 0:
         magnitude = 1
-    else: magnitude = -1
+    else:
+        magnitude = -1
     return magnitude
 
 # Threshold for scrapping data on its way into the average, in approximate cm*s^-1
