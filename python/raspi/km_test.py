@@ -5,6 +5,7 @@ import time
 import sys
 import random
 import math
+import operator
 from turtle import width
 
 # Homebrew modules
@@ -18,7 +19,7 @@ FORWARDS = 1
 BACKWARDS = -1
 DRIVING_SPEED = 100
 TURNING_SPEED = 100
-STOP_DISTANCE = 25
+STOP_DISTANCE = 15
 ROBOT_WIDTH = 0.40 # metres
 
 tfreq = 10 # Timer Frequency, Execution frequency in Hz
@@ -126,7 +127,8 @@ def chg_l():
     return chg_l
 
 # Function that tells us if the magnitude of something is 1/0/-1,
-# intended for checking magnitude of change but really it'll take whatever
+# intended for checking magnitude of change but really it'll take whatever.
+# Positive is getting closer, negative is getting further away.
 def magnitude(arg):
     if arg > 0:
         magnitude = 1
@@ -235,14 +237,14 @@ def turn_robot(direction, duration):
 # If they're equidistant within a margin, you're OK;
 # check change on each, adjust motor balance to 
 
-turnscale = DRIVING_SPEED/5
+centering_turnscale = int(DRIVING_SPEED/5)
 
 def drive_centered(direction, duration):
     speed = DRIVING_SPEED * direction
     iterations = int(duration*10)
     for i in range(iterations):
-        l_coeff = int((avg_r()/avg_l())*turnscale)
-        r_coeff = int((avg_l()/avg_r())*turnscale)
+        l_coeff = int((avg_r()/avg_l())*centering_turnscale)
+        r_coeff = int((avg_l()/avg_r())*centering_turnscale)
         motor_serial.send_command(l_coeff + speed, r_coeff + speed)
         time.sleep(tstep)
 
@@ -286,6 +288,16 @@ while not motor_serial.shutdown_now:
     if sense_fwd() < STOP_DISTANCE:
         print("Holding")
         stop_robot(tstep)
+    elif operator.xor(change_r,change_l) < -50:
+        print("Turning")
+        original_fwd = sense_fwd()
+        drive_robot(FORWARDS,3)
+        if change_r < -50:
+            while change_r > 10 or (original_fwd - sense_l()) < 5 :
+                turn_robot(RIGHT,1)
+        else:
+            while change_l > 10 or (original_fwd - sense_r() < 5):
+                turn_robot(LEFT,1)
     else:
         print("Driving")
         drive_centered(FORWARDS, tstep)
