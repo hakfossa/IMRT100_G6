@@ -172,7 +172,6 @@ class Eyelid(pygame.sprite.Sprite):
 
 
     def close_eye(self):
-        print("closing", self.direction_modifier)
         self.opening = False
         self.speed = self.direction_modifier
 
@@ -191,6 +190,8 @@ class Eyelid(pygame.sprite.Sprite):
         self.squinting = True
         self.squint_timer = squint_time
         self.close_eye()
+
+    
         
 class Eyelids():
     
@@ -216,9 +217,36 @@ class Eyelids():
         self.lower.squint(squint_time)
 
 
+class Eyelid_controller():
+    
+    def __init__(self, eyelids):
+        self.eyelids = eyelids
+        self.timer = 0
+
+    def random_event(self):
+        event = random.choice(["blink", "squint", "blink"])
+        if event == "blink":
+            self.eyelids.blink()
+        elif event == "squint":
+            self.eyelids.squint()
+        print(event)
+        self.add_time()
+
+    def add_time(self):
+        self.timer = random.randint(20, 100)
+    
+    def update(self):
+        if self.timer > 0:
+            self.timer -= 1
+        else:
+            self.random_event()
+
+
+
 
 eye = Core_eye()
 eyelids = Eyelids()
+eyelid_controller = Eyelid_controller(eyelids)
 
 
 while True:
@@ -253,7 +281,7 @@ while True:
     
     eye.update()
     eyelids.update()
-    
+    eyelid_controller.update()
 
     DISPLAY.fill(BLACK)
     eye.draw(DISPLAY)
