@@ -376,7 +376,7 @@ while not motor_serial.shutdown_now:
     elif chg_r()>50 or chg_l()>50:
         print("Turning")
         
-        drive_robot(FORWARDS,1)
+        drive_robot(FORWARDS,2)
         if chg_r() > 50:
             turn_right()
         else:
