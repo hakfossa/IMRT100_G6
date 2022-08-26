@@ -296,7 +296,7 @@ def compare_distances(rotated_dist):
     sensor_inputs = [sense_fwd(), sense_r(), sense_bck(), sense_l()]
     correct = 0
     for i in range(len(sensor_inputs)):
-        if abs(sensor_inputs[i]-rotated_dist[i]) < 5:
+        if abs(sensor_inputs[i]-rotated_dist[i]) < 15:
             correct += 1
 
     if correct >= 3:
