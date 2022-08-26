@@ -72,11 +72,11 @@ changethresh = 3
 sensor_list = [DX_fwd,DX_bck,DX_r,DX_l]
 for sensor in sensor_list:
     for i in range(DXlength):
-        sensor.append(255)
+        sensor.append(40)
 chgbuffer_list = [change_fwd,change_bck,change_r,change_l]
 for buffer in chgbuffer_list:
     for i in range(chgbuffer_length):
-        buffer.append(255)
+        buffer.append(40)
 print("Buffers filled with gibberish.")
 
 # Functions that retrieve sensor data:
