@@ -366,7 +366,7 @@ for buffer in chgbuffer_list:
 initialfill = False
 print("Buffers filled with gibberish.")
 
-startup_timer = 80
+
 rotated_dist = [0, 0, 0, 0]
 
 # Main loop
@@ -391,11 +391,6 @@ while not motor_serial.shutdown_now:
     elif sense_fwd() < 25:
         TURNING_R = True
         rotated_dist = rotate_distances(right=True)
-
-
-    elif startup_timer > 0:
-        time.sleep(0.1)
-        startup_timer -= 1
 
     elif TURNING_R:
         compare_distances(rotated_dist)
