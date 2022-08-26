@@ -275,6 +275,38 @@ def drive_centered(direction, duration):
 # v v v v v v v v v v v v v v v v #
 ###################################
 
+def get_distances():
+    distances = [avg_fwd, avg_r, avg_bck, avg_l]
+    return distances
+
+def rotate_distances(right: bool):
+    distances = get_distances()
+
+    if right:
+        rotated_dist = distances[:3]
+        rotated_dist.insert(distances[-1])
+    if not right:
+        rotated_dist = distances[1:]
+        rotated_dist.append(distances[0])
+
+    return rotated_dist
+
+
+def compare_distances(rotated_dist):
+    sensor_inputs = [sense_fwd(), sense_r(), sense_bck(), sense_l()]
+    correct = 0
+    for i in range(len(sensor_inputs)):
+        if abs(sensor_inputs[i]-rotated_dist[i]) < 5:
+            correct += 1
+
+    if correct >= 3:
+        TURNING_L = False
+        TURNING_R = False
+
+
+
+
+
 
 def check_turn_l():
     if chg_l() > 10 or ORIGINAL_FWD - sense_r() < 5:
@@ -329,6 +361,7 @@ def check_abort():
 
 
 startup_timer = 80
+rotated_dist = [0, 0, 0, 0]
 
 # Main loop
 print("Entering loop. Ctrl+c to terminate")
@@ -355,22 +388,24 @@ while not motor_serial.shutdown_now:
         startup_timer -= 1
 
     elif TURNING_R:
-        check_turn_r()
+        compare_distances(rotated_dist)
         turn_robot(RIGHT, tstep)
     
     elif TURNING_L:
-        check_turn_l()
+        compare_distances(rotated_dist)
         turn_robot(LEFT, tstep)
 
     
     elif chg_r()>50 or chg_l()>50:
         print("Turning")
-        ORIGINAL_FWD = sense_fwd()
+        
         drive_robot(FORWARDS,1)
         if chg_r() > 50:
             TURNING_R = True
+            rotated_dist = rotate_distances(right=True)
         else:
             TURNING_L = True
+            rotated_dist = rotate_distances(right=False)
 
     else:
         print("Driving")
