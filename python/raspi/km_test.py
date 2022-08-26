@@ -284,11 +284,11 @@ def avoid_wall(right):
 ###################################
 
 def left_too_close():
-    return avg_l < 10
+    return avg_l() < 10
 
 
 def rigth_too_close():
-    return avg_r < 10
+    return avg_r() < 10
 
 
 def check_turn_l():
