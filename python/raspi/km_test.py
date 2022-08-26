@@ -124,13 +124,13 @@ def chg_r():
     chg_r = change_r[chgbuffer_length-1] - change_r[0]
     if abs(chg_r) < changethresh:
         chg_r = 0
-    return chg_r
+    return abs(chg_r)
 
 def chg_l():
     chg_l = change_l[chgbuffer_length-1] - change_l[0]
     if abs(chg_l) < changethresh:
         chg_l = 0
-    return chg_l
+    return abs(chg_l)
 
 # Function that tells us if the magnitude of something is 1/0/-1,
 # intended for checking magnitude of change but really it'll take whatever.
