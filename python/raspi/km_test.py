@@ -18,10 +18,12 @@ LEFT = -1
 RIGHT = 1
 FORWARDS = 1
 BACKWARDS = -1
-DRIVING_SPEED = 50
-TURNING_SPEED = 50
+DRIVING_SPEED = 100
+TURNING_SPEED = 100
 STOP_DISTANCE = 15
 ROBOT_WIDTH = 0.40 # metres
+#ration between default speed and corrigation speed
+SPD_COEF_RATIO = 3/4
 
 TURNING_R = False
 TURNING_L = False
@@ -241,16 +243,17 @@ def turn_robot(direction, duration):
 # If they're equidistant within a margin, you're OK;
 # check change on each, adjust motor balance to 
 
-centering_turnscale = int(DRIVING_SPEED/5)
 
 def drive_centered(direction, duration):
     speed = DRIVING_SPEED * direction
     iterations = int(duration*10)
+    flatspeed = DRIVING_SPEED*SPD_COEF_RATIO
+    variab_speed = DRIVING_SPEED-flatspeed
     for i in range(iterations):
         l_coeff = (avg_r()/avg_l())
         r_coeff = (avg_l()/avg_r())
-        speed_l = 50 + int(l_coeff*speed)
-        speed_r = 50 + int(r_coeff*speed)
+        speed_l = int(flatspeed + l_coeff*variab_speed)
+        speed_r = int(flatspeed + r_coeff*variab_speed)
         print("left:", l_coeff, "right:", r_coeff)
         motor_serial.send_command(speed_l, speed_r)
         time.sleep(tstep)
