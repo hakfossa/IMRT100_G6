@@ -328,7 +328,7 @@ def check_abort():
 
 
 
-startup_timer = 20
+startup_timer = 40
 
 # Main loop
 print("Entering loop. Ctrl+c to terminate")
