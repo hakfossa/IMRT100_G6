@@ -223,8 +223,12 @@ def drive_robot(direction, duration):
         time.sleep(tstep)
 
 def turn_robot(direction, duration):
-    motor_serial.send_command(TURNING_SPEED * direction, -TURNING_SPEED * direction)
-    time.sleep(tstep)
+    speed = TURNING_SPEED*direction
+    iterations = int(duration * 10)
+
+    for i in range(iterations):
+        motor_serial.send_command(speed,-speed)
+        time.sleep(tstep)
 
 # Drive centered
 
