@@ -381,7 +381,11 @@ while not motor_serial.shutdown_now:
     if sense_fwd() < STOP_DISTANCE:
         print("Holding")
         stop_robot(tstep)
-        TURNING_R = True #midletidig
+
+    elif sense_fwd() < 25:
+        TURNING_R = True
+        rotated_dist = rotate_distances(right=True)
+
 
     elif startup_timer > 0:
         time.sleep(0.1)
