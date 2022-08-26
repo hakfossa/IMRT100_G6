@@ -366,7 +366,7 @@ for buffer in chgbuffer_list:
 initialfill = False
 print("Buffers filled with gibberish.")
 
-
+startup_timer = 30
 rotated_dist = [0, 0, 0, 0]
 
 # Main loop
@@ -387,6 +387,12 @@ while not motor_serial.shutdown_now:
     if sense_fwd() < STOP_DISTANCE:
         print("Holding")
         stop_robot(tstep)
+
+    elif startup_timer > 0:
+        print("Sleep for", startup_timer, "more desiseconds")
+        time.sleep(0.10)
+        startup_timer -= 1
+
 
     elif sense_fwd() < 20:
         TURNING_R = True
