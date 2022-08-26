@@ -297,7 +297,7 @@ def compare_distances(rotated_dist):
     correct = 0
     print("sensor inputs: ", sensor_inputs[1])
     for i in range(len(sensor_inputs)):
-        if abs(sensor_inputs[i]-rotated_dist[i]) < 5:
+        if abs(int(sensor_inputs[i])-int(rotated_dist[i])) < 5:
             correct += 1
 
     if correct >= 3:
