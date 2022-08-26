@@ -68,17 +68,6 @@ chgbuffer_length = 10
 # We accept X units as error before assuming a change has happened.
 changethresh = 3
 
-# Go through the buffers and give them an appropriate amount of nothing
-sensor_list = [DX_fwd,DX_bck,DX_r,DX_l]
-for sensor in sensor_list:
-    for i in range(DXlength):
-        sensor.append(40)
-chgbuffer_list = [change_fwd,change_bck,change_r,change_l]
-for buffer in chgbuffer_list:
-    for i in range(chgbuffer_length):
-        buffer.append(40)
-print("Buffers filled with gibberish.")
-
 # Functions that retrieve sensor data:
 def sense_fwd():
     dist_fwd = motor_serial.get_dist_1()
@@ -92,6 +81,25 @@ def sense_r():
 def sense_l():
     dist_l = motor_serial.get_dist_4()
     return dist_l
+
+# Go through the buffers and give them an appropriate amount of the first instant sensor reading
+sensor_list = [DX_fwd,DX_bck,DX_r,DX_l]
+for sensor in sensor_list:
+    for i in range(DXlength):
+        if sensor == DX_fwd:
+            sensor.append(sense_fwd())
+        elif sensor == DX_bck:
+            sensor.append(sense_bck())
+        elif sensor == DX_r:
+            sensor.append(sense_r())
+        elif sensor == DX_l:
+            sensor.append(sense_l())
+chgbuffer_list = [change_fwd,change_bck,change_r,change_l]
+for buffer in chgbuffer_list:
+    for i in range(chgbuffer_length):
+        buffer.append(0)
+initialfill = False
+print("Buffers filled with gibberish.")
 
 # Functions that output dampened (= recent average of) sensor data:
 def avg_fwd():
