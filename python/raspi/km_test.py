@@ -328,11 +328,11 @@ while not motor_serial.shutdown_now:
         check_turn_l()
         turn_robot(LEFT, tstep)
     
-    elif chg_r()>-50 or chg_l()>-50:
+    elif chg_r()>50 or chg_l()>50:
         print("Turning")
         original_fwd = sense_fwd()
         drive_robot(FORWARDS,1)
-        if chg_r() > -50:
+        if chg_r() > 50:
             TURNING_R = True
         else:
             TURNING_L = True
