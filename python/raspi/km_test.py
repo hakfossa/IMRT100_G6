@@ -284,7 +284,7 @@ def rotate_distances(right: bool):
 
     if right:
         rotated_dist = distances[:3]
-        rotated_dist.insert(distances[-1])
+        rotated_dist.insert(0, distances[-1])
     if not right:
         rotated_dist = distances[1:]
         rotated_dist.append(distances[0])
@@ -308,7 +308,7 @@ def compare_distances(rotated_dist):
 
 
 
-def check_turn_l():
+""" def check_turn_l():
     if chg_l() > 10 or ORIGINAL_FWD - sense_r() < 5:
         TURNING_L = True
     else:
@@ -318,7 +318,7 @@ def check_turn_r():
     if chg_r() > 10 or ORIGINAL_FWD - sense_l() < 5:
         TURNING_R = True
     else:
-        TURNING_R = False
+        TURNING_R = False """
 
 
 # Create motor serial object
