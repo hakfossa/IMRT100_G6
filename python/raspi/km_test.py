@@ -243,20 +243,53 @@ def turn_robot(direction, duration):
 # If they're equidistant within a margin, you're OK;
 # check change on each, adjust motor balance to 
 
-
 def drive_centered(direction, duration):
-    speed = DRIVING_SPEED * direction
+    
     iterations = int(duration*10)
     flatspeed = DRIVING_SPEED*SPD_COEF_RATIO
     variab_speed = DRIVING_SPEED-flatspeed
+
     for i in range(iterations):
         l_coeff = (avg_r()/avg_l())
         r_coeff = (avg_l()/avg_r())
         speed_l = int(flatspeed + l_coeff*variab_speed)
         speed_r = int(flatspeed + r_coeff*variab_speed)
+    
         print("left:", l_coeff, "right:", r_coeff)
         motor_serial.send_command(speed_l, speed_r)
         time.sleep(tstep)
+
+
+def avoid_wall(right):
+    duration = 1
+    drive_robot(BACKWARDS, duration)
+    
+    if right:
+        turn_robot(RIGHT, duration)
+    else:
+        turn_robot(LEFT, duration)
+
+
+
+###################################
+#    _                 _          #
+#   | |               (_)         #       
+#   | |     ___   __ _ _  ___     #
+#   | |    / _ \ / _` | |/ __|    #
+#   | |___| (_) | (_| | | (__     #
+#   \_____/\___/ \__, |_|\___|    #
+#                 __/ |           #
+#                |___/            #
+# v v v v v v v v v v v v v v v v #
+###################################
+
+def left_too_close():
+    return avg_l < 10
+
+
+def rigth_too_close():
+    return avg_r < 10
+
 
 def check_turn_l():
     if chg_l() > 10 or original_fwd - sense_r() < 5:
@@ -325,6 +358,12 @@ while not motor_serial.shutdown_now:
     if sense_fwd() < STOP_DISTANCE:
         print("Holding")
         stop_robot(tstep)
+
+    elif left_too_close():
+        avoid_wall(right=False)
+
+    elif rigth_too_close():
+        avoid_wall(right=True)
 
     elif TURNING_R:
         check_turn_r()
