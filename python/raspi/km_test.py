@@ -337,6 +337,7 @@ while not motor_serial.shutdown_now:
     #check_abort()
     avg_update()
     change_update()
+    print("change_l:", change_l)
 
 #    print("aFWD:",round(avg_fwd()),"chg_fwd:",round(chg_fwd(),1),"magnitude.chg_fwd:",magnitude(chg_fwd()))
 
