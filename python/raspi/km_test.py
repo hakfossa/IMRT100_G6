@@ -277,13 +277,13 @@ def drive_centered(direction, duration):
 
 
 def check_turn_l():
-    if chg_l() > 10 or original_fwd - sense_r() < 5:
+    if chg_l() > 10 or ORIGINAL_FWD - sense_r() < 5:
         TURNING_L = True
     else:
         TURNING_L = False
 
 def check_turn_r():
-    if chg_r() > 10 or original_fwd - sense_l() < 5:
+    if chg_r() > 10 or ORIGINAL_FWD - sense_l() < 5:
         TURNING_R = True
     else:
         TURNING_R = False
@@ -328,7 +328,7 @@ def check_abort():
 
 
 
-startup_timer = 40
+startup_timer = 80
 
 # Main loop
 print("Entering loop. Ctrl+c to terminate")
