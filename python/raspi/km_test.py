@@ -276,7 +276,7 @@ def drive_centered(direction, duration):
 ###################################
 
 def get_distances():
-    distances = [avg_fwd, avg_r, avg_bck, avg_l]
+    distances = [avg_fwd(), avg_r(), avg_bck(), avg_l()]
     return distances
 
 def rotate_distances(right: bool):
@@ -295,10 +295,8 @@ def rotate_distances(right: bool):
 def compare_distances(rotated_dist):
     sensor_inputs = [sense_fwd(), sense_r(), sense_bck(), sense_l()]
     correct = 0
-    print("sensor inputs: ", sensor_inputs[0])
-    print("rotated_dist:", rotated_dist[0])
     for i in range(len(sensor_inputs)):
-        if abs(int(sensor_inputs[i])-int(rotated_dist[i])) < 5:
+        if abs(sensor_inputs[i]-rotated_dist[i]) < 5:
             correct += 1
 
     if correct >= 3:
