@@ -6,6 +6,7 @@ import sys
 import random
 import math
 import operator
+from turtle import forward
 import keyboard
 
 
@@ -254,10 +255,11 @@ def drive_centered(direction, duration):
 
 def turn_right():
     turn_robot(RIGHT, 2)
+    drive_robot(FORWARDS, 2)
 
 def turn_left():
     turn_robot(LEFT, 2)
-
+    drive_robot(FORWARDS, 2)
 
 ###################################
 #    _                 _          #
