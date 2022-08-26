@@ -255,19 +255,11 @@ def drive_centered(direction, duration):
         speed_l = int(flatspeed + l_coeff*variab_speed)
         speed_r = int(flatspeed + r_coeff*variab_speed)
     
-        print("left:", l_coeff, "right:", r_coeff)
+        #print("left:", l_coeff, "right:", r_coeff)
         motor_serial.send_command(speed_l, speed_r)
         time.sleep(tstep)
 
 
-def avoid_wall(right):
-    duration = 1
-    drive_robot(BACKWARDS, duration)
-    
-    if right:
-        turn_robot(RIGHT, duration)
-    else:
-        turn_robot(LEFT, duration)
 
 
 
@@ -282,13 +274,6 @@ def avoid_wall(right):
 #                |___/            #
 # v v v v v v v v v v v v v v v v #
 ###################################
-
-def left_too_close():
-    return avg_l() < 10
-
-
-def rigth_too_close():
-    return avg_r() < 10
 
 
 def check_turn_l():
@@ -353,17 +338,11 @@ while not motor_serial.shutdown_now:
 
 #    print(" FWD:",round(sense_fwd(),1),"BCK:",round(sense_bck(),1),"R:",(round(sense_r(),1),"L:",round(sense_l(),1)))
 #    print("aFWD:",round(avg_fwd(),1),"aBCK:",round(avg_bck(),1),"aR:",round(avg_r(),1),"aL:",round(avg_l(),1))
-
+    print("chg_r =", chg_r(), "chg_l = ", chg_l())
     # Obstacle check
     if sense_fwd() < STOP_DISTANCE:
         print("Holding")
         stop_robot(tstep)
-
-    elif left_too_close():
-        avoid_wall(right=False)
-
-    elif rigth_too_close():
-        avoid_wall(right=True)
 
     elif TURNING_R:
         check_turn_r()
@@ -372,6 +351,7 @@ while not motor_serial.shutdown_now:
     elif TURNING_L:
         check_turn_l()
         turn_robot(LEFT, tstep)
+
     
     elif chg_r()>50 or chg_l()>50:
         print("Turning")
