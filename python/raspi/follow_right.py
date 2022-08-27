@@ -74,7 +74,7 @@ while not motor_serial.shutdown_now :
     sensor_left = motor_serial.get_dist_4()
 
 
-    if sensor_fwd < 15:
+    if sensor_fwd < 25:
         #stop_robot(1)
         if sensor_left >sensor_right*2:
             turn_robot(LEFT,1.8)
