@@ -64,7 +64,7 @@ motor_serial.run()
 
 
 turn_timer = 0
-time.sleep(2)
+time.sleep(2.5)
 
 
 # Now we will enter a loop that will keep looping until the program terminates
@@ -94,6 +94,7 @@ while not motor_serial.shutdown_now :
     # svinge inn i åpning høyre
     elif turn_timer==0:
         turn_robot(RIGHT,1.8)
+        turn_timer -= 1
 
     # se åpning høyre
     elif sensor_right > 60 and turn_timer<=-6:
