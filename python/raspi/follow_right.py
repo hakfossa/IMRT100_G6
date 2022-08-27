@@ -70,6 +70,7 @@ print("Entering loop. Ctrl+c to terminate")
 while not motor_serial.shutdown_now :
 
     sensor_fwd = motor_serial.get_dist_1()
+    sensor_right = motor_serial.get_dist_3()
 
 
     if sensor_fwd < 15:
@@ -85,3 +86,4 @@ while not motor_serial.shutdown_now :
 # we have now exited the loop
 # It's only polite to say goodbye
 print("I don't hate you")
+
