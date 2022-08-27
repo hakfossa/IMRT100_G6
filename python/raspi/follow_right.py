@@ -77,6 +77,8 @@ while not motor_serial.shutdown_now :
     sensor_right = motor_serial.get_dist_3()
     sensor_left = motor_serial.get_dist_4()
 
+    print("turn timer:", turn_timer)
+
     # Kjøre fremover
     if sensor_fwd < 25:
         turn_timer = -1
