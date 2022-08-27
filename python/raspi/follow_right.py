@@ -85,16 +85,16 @@ while not motor_serial.shutdown_now :
         turn_timer = -1
         #stop_robot(1)
         if sensor_left >sensor_right*2:
-            turn_robot(LEFT,1.8)
+            turn_robot(LEFT,1.7)
         else:
-            turn_robot(RIGHT, 1.8)
+            turn_robot(RIGHT, 1.7)
 
     
 
 
     # svinge inn i åpning høyre
     elif turn_timer==0:
-        turn_robot(RIGHT,1.8)
+        turn_robot(RIGHT,1.7)
         turn_timer -= 1
 
     # se åpning høyre
