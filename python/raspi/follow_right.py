@@ -69,9 +69,14 @@ motor_serial.run()
 print("Entering loop. Ctrl+c to terminate")
 while not motor_serial.shutdown_now :
 
-    drive_robot(FORWARDS, 2)
-    turn_robot(RIGHT, 2)
- 
+    sensor_fwd = motor_serial.get_dist_1()
+
+
+    if sensor_fwd < 15:
+        stop_robot(1)
+
+    else: 
+        drive_robot(FORWARDS, 0.5)
 
 
 
