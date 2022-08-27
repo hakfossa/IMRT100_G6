@@ -80,9 +80,9 @@ while not motor_serial.shutdown_now :
             turn_robot(LEFT,1.8)
         else:
             turn_robot(RIGHT, 1.8)
-            
+
     elif sensor_right > 50:
-        turn_robot(LEFT,1.8)        
+        turn_robot(RIGHT,1.8)        
 
     elif sensor_right < 15:
         turn_robot(LEFT,0.3)
