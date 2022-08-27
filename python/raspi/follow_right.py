@@ -73,7 +73,8 @@ while not motor_serial.shutdown_now :
 
 
     if sensor_fwd < 15:
-        stop_robot(1)
+        #stop_robot(1)
+        turn_robot(RIGHT,1.8)
 
     else: 
         drive_robot(FORWARDS, 0.5)
