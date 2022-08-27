@@ -63,6 +63,10 @@ except:
 motor_serial.run()
 
 
+startup_timer = 25
+time.sleep(2)
+
+
 # Now we will enter a loop that will keep looping until the program terminates
 # The motor_serial object will inform us when it's time to exit the program
 # (say if the program is terminated by the user)
