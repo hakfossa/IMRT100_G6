@@ -77,7 +77,7 @@ while not motor_serial.shutdown_now :
     sensor_right = motor_serial.get_dist_3()
     sensor_left = motor_serial.get_dist_4()
 
-
+    # Kjøre fremover
     if sensor_fwd < 25:
         #stop_robot(1)
         if sensor_left >sensor_right*2:
@@ -85,17 +85,23 @@ while not motor_serial.shutdown_now :
         else:
             turn_robot(RIGHT, 1.8)
 
-    elif sensor_right > 50:
-        turn_robot(RIGHT,1.8)        
+    # svinge inn i åpning høyre
+    elif sensor_right > 60:
+        drive_robot(FORWARDS, 2) 
+        turn_robot(RIGHT,1.8) 
+        drive_robot(FORWARDS, 2)       
 
+    # unngå høyre vegg
     elif sensor_right < 15:
         turn_robot(LEFT,0.3)
         drive_robot(FORWARDS, 0.3)
 
+    # unngå venstre vegg
     elif sensor_left < 15:
         turn_robot(RIGHT, 0.3)
         drive_robot(FORWARDS, 0.3)
 
+    # kjør rett frem
     else: 
         drive_robot(FORWARDS, 0.3)
 
