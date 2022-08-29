@@ -47,16 +47,16 @@ def turn_robot(direction, duration):
 def calc_speed_modifiers(sensor_left, sensor_right):
     """bestemmer en modifikator for hjul som er lengst unna vegg"""
     if sensor_left < 15:
-        r_speed_modifier = 0.8
+        r_speed_modifier = 0.7
     elif sensor_left < 20:
-        r_speed_modifier = 0.9
+        r_speed_modifier = 0.85
     else: 
         r_speed_modifier = 1
     
     if sensor_right < 15:
-        l_speed_modifier = 0.8
+        l_speed_modifier = 0.7
     elif sensor_right < 20:
-        l_speed_modifier = 0.9
+        l_speed_modifier = 0.85
     else: 
         l_speed_modifier = 1
     
@@ -117,7 +117,7 @@ while not motor_serial.shutdown_now :
 
 
     # svinge inn i åpning høyre
-    elif turn_timer==0:
+    elif turn_timer == 0:
         turn_robot(RIGHT,1.7)
         turn_timer -= 1
 
@@ -139,7 +139,7 @@ while not motor_serial.shutdown_now :
     # kjør rett frem
     else: 
         # ikke snu om glippe
-        if turn_timer > 0 and sensor_right < 60:
+        if 0 < turn_timer < 2 and sensor_right < 60:
             turn_timer = -1
 
         turn_timer = turn_timer - 1
