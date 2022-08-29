@@ -9,7 +9,7 @@ LEFT = -1
 RIGHT = 1
 FORWARDS = 1
 BACKWARDS = -1
-DRIVING_SPEED = 100
+DRIVING_SPEED = 120
 TURNING_SPEED = 100
 STOP_DISTANCE = 25
 
@@ -138,6 +138,10 @@ while not motor_serial.shutdown_now :
 
     # kjør rett frem
     else: 
+        # ikke snu om glippe
+        if turn_timer > 0 and sensor_right < 60:
+            turn_timer = -1
+
         turn_timer = turn_timer - 1
         drive_robot(FORWARDS, 0.2, l_speed_modifier, r_speed_modifier)
 
