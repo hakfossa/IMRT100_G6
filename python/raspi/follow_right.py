@@ -24,23 +24,45 @@ def stop_robot(duration):
 
 
 
-def drive_robot(direction, duration):
+def drive_robot(direction, duration, l_speed_modifier=1, r_speed_modifier=1):
     
-    speed = DRIVING_SPEED * direction
+    l_speed = DRIVING_SPEED * direction * l_speed_modifier
+    r_speed = DRIVING_SPEED * direction * r_speed_modifier
     iterations = int(duration * 10)
 
     for i in range(iterations):
-        motor_serial.send_command(speed, speed)
+        motor_serial.send_command(l_speed, r_speed)
         time.sleep(0.10)
 
 def turn_robot(direction, duration):
 
-    speed = DRIVING_SPEED * direction
+    speed = TURNING_SPEED * direction
     iterations = int(duration * 10)
 
     for i in range(iterations):
         motor_serial.send_command(speed, -speed)
         time.sleep(0.10)
+
+
+def calc_speed_modifiers(sensor_left, sensor_right):
+    """bestemmer en modifikator for hjul som er lengst unna vegg"""
+    if sensor_left < 15:
+        r_speed_modifier = 0.8
+    elif sensor_left < 20:
+        r_speed_modifier = 0.9
+    else: 
+        r_speed_modifier = 1
+    
+    if sensor_right < 15:
+        l_speed_modifier = 0.8
+    elif sensor_right < 20:
+        l_speed_modifier = 0.9
+    else: 
+        l_speed_modifier = 1
+    
+    return l_speed_modifier, r_speed_modifier
+
+
 
 
 
@@ -78,10 +100,12 @@ while not motor_serial.shutdown_now :
     sensor_right = motor_serial.get_dist_3()
     sensor_left = motor_serial.get_dist_4()
 
+    l_speed_modifier, r_speed_modifier = calc_speed_modifiers(sensor_left, sensor_right)
+
     print("turn timer:", turn_timer)
 
     # Kjøre fremover
-    if sensor_fwd < 20:
+    if sensor_fwd < 17:
         turn_timer = -1
         #stop_robot(1)
         if sensor_right >sensor_left*2:
@@ -98,23 +122,24 @@ while not motor_serial.shutdown_now :
         turn_timer -= 1
 
     # se åpning høyre
-    elif sensor_right > 60 and turn_timer<=-10:
-        turn_timer = 6      
+    elif sensor_right > 60 and turn_timer<=-12:
+        turn_timer = 8      
+
 
     # unngå høyre vegg
-    elif sensor_right < 15:
+    elif sensor_right < 10:
         turn_robot(LEFT,0.3)
-        drive_robot(FORWARDS, 0.3)
+        drive_robot(FORWARDS, 0.2)
 
     # unngå venstre vegg
-    elif sensor_left < 15:
+    elif sensor_left < 10:
         turn_robot(RIGHT, 0.3)
-        drive_robot(FORWARDS, 0.3)
+        drive_robot(FORWARDS, 0.2)
 
     # kjør rett frem
     else: 
         turn_timer = turn_timer - 1
-        drive_robot(FORWARDS, 0.3)
+        drive_robot(FORWARDS, 0.2, l_speed_modifier, r_speed_modifier)
 
 
 
