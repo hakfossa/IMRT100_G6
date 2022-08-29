@@ -123,7 +123,7 @@ while not motor_serial.shutdown_now :
 
     # se åpning høyre
     elif sensor_right > 60 and turn_timer<=-12:
-        turn_timer = 8      
+        turn_timer = 6      
 
 
     # unngå høyre vegg
