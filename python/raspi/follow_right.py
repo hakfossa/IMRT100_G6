@@ -26,8 +26,8 @@ def stop_robot(duration):
 
 def drive_robot(direction, duration, l_speed_modifier=1, r_speed_modifier=1):
     
-    l_speed = DRIVING_SPEED * direction * l_speed_modifier
-    r_speed = DRIVING_SPEED * direction * r_speed_modifier
+    l_speed = int(DRIVING_SPEED * direction * l_speed_modifier)
+    r_speed = int(DRIVING_SPEED * direction * r_speed_modifier)
     iterations = int(duration * 10)
 
     for i in range(iterations):
@@ -108,7 +108,7 @@ while not motor_serial.shutdown_now :
     if sensor_fwd < 17:
         turn_timer = -1
         #stop_robot(1)
-        if sensor_right >sensor_left*2:
+        if sensor_right > sensor_left*2:
             turn_robot(RIGHT,1.7)
         else:
             turn_robot(LEFT, 1.7)
