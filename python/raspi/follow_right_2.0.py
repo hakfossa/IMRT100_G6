@@ -45,18 +45,18 @@ def turn_robot(direction, duration):
 
 
 def smooth_turn(direction, duration):
-    speed = TURNING_SPEED * direction
+    speed = TURNING_SPEED * direction *2
     iterations = int(duration * 10)
 
 
     if direction < 1:
         for i in range(iterations):
-            motor_serial.send_command(0, speed)
+            motor_serial.send_command(10, speed)
             time.sleep(0.10)
 
     else:
         for i in range(iterations):
-            motor_serial.send_command(speed, 0)
+            motor_serial.send_command(speed, 10)
             time.sleep(0.10)
 
 
