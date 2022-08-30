@@ -41,6 +41,10 @@ def ajust_90deg(sens_lfwd, sens_rfwd):
                 turn_robot(LEFT, 0.1)
             else:
                 pass
+            
+            sens_rfwd = motor_serial.get_dist_1() 
+            sens_lfwd = motor_serial.get_dist_2()
+
             diff_fwd = abs(sens_rfwd-sens_lfwd)
 
         print("Incremental ajust complete")
@@ -66,6 +70,8 @@ print("Entering loop. Ctrl+c to terminate")
 while not motor_serial.shutdown_now :
     sensor_rfwd = motor_serial.get_dist_1() 
     sensor_lfwd = motor_serial.get_dist_2()
+
+    print(sensor_lfwd, print(sensor_rfwd))
 
     ajust_90deg(sensor_lfwd, sensor_rfwd)
 
