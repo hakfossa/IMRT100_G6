@@ -1,3 +1,4 @@
+import keyword
 import imrt_robot_serial
 import signal
 import time
@@ -45,6 +46,12 @@ def ajust_90deg(sens_lfwd, sens_rfwd):
             else:
                 print("in else")
                 pass
+            
+
+            try: 
+                pass
+            except KeyboardInterrupt:
+                break
             
             sens_rfwd = motor_serial.get_dist_1() 
             sens_lfwd = motor_serial.get_dist_2()
