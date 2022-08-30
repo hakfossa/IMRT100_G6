@@ -67,9 +67,9 @@ def ajust_90deg(sens_lfwd, sens_rfwd):
     if diff_fwd > 30:
         # dersom kun ser noe på en sensor forran, snu 90
         if sens_rfwd > sens_lfwd:
-            turn_robot(RIGHT, 1.7)
+            turn_robot(RIGHT, 1.0)
         else:
-            turn_robot(LEFT, 1.7)
+            turn_robot(LEFT, 1.0)
 
         #print("wallavoid completed")
 
@@ -174,9 +174,9 @@ while not motor_serial.shutdown_now :
 
         if sensor_rfwd < 15 or sensor_lfwd < 15:
             if sensor_right > sensor_left*2:
-                turn_robot(RIGHT,1.2)
+                turn_robot(RIGHT,1.0)
             else:
-                turn_robot(LEFT, 1.2)
+                turn_robot(LEFT, 1.0)
 
     
 
