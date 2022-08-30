@@ -96,7 +96,8 @@ print("sleep for 3")
 print("Entering loop. Ctrl+c to terminate")
 while not motor_serial.shutdown_now :
 
-    sensor_fwd = motor_serial.get_dist_1()
+    sensor_rfwd = motor_serial.get_dist_1() 
+    sensor_lfwd = motor_serial.get_dist_2()
     sensor_right = motor_serial.get_dist_3()
     sensor_left = motor_serial.get_dist_4()
 
@@ -105,7 +106,7 @@ while not motor_serial.shutdown_now :
     print("turn timer:", turn_timer)
 
     # Kjøre fremover
-    if sensor_fwd < 17:
+    if sensor_rfwd < 15 or sensor_lfwd < 15:
         turn_timer = -1
         #stop_robot(1)
         if sensor_right > sensor_left*2:
