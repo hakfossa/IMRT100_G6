@@ -54,16 +54,16 @@ def ajust_90deg(sens_lfwd, sens_rfwd):
         else:
             turn_robot(LEFT, 1.0)
 
-
-    # juster til 90 grader på vegg
-    while diff_fwd < 4:
-        if sens_lfwd > sens_rfwd:
-            turn_robot(RIGHT, 0.1)
-        elif sens_lfwd < sens_rfwd:
-            turn_robot(LEFT, 0.1)
-        else:
-            pass
-        diff_fwd = abs(sens_rfwd-sens_lfwd)
+    else:
+        # juster til 90 grader på vegg
+        while diff_fwd < 2:
+            if sens_lfwd > sens_rfwd:
+                turn_robot(RIGHT, 0.1)
+            elif sens_lfwd < sens_rfwd:
+                turn_robot(LEFT, 0.1)
+            else:
+                pass
+            diff_fwd = abs(sens_rfwd-sens_lfwd)
 
 
 
