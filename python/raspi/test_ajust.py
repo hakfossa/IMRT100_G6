@@ -22,6 +22,7 @@ def turn_robot(direction, duration):
 
 def ajust_90deg(sens_lfwd, sens_rfwd):
     diff_fwd = abs(sens_rfwd-sens_lfwd)
+    print("diff_fwd:", diff_fwd)
 
     if diff_fwd > 60:
         # dersom kun ser noe på en sensor forran, snu 90
