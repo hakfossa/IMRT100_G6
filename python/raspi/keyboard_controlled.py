@@ -1,4 +1,4 @@
-print("sleep for 3.5")import imrt_robot_serial
+import imrt_robot_serial
 import signal
 import time
 import sys
@@ -11,8 +11,8 @@ LEFT = -1
 RIGHT = 1
 FORWARDS = 1
 BACKWARDS = -1
-DRIVING_SPEED = 200
-TURNING_SPEED = 150
+DRIVING_SPEED = 100
+TURNING_SPEED = 100
 STOP_DISTANCE = 25
 
 
