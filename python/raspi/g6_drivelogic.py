@@ -1,40 +1,15 @@
-from IMRT100_G6.python.raspi.imrt_robot_serial import IMRTRobotSerial
-import imrt_robot_serial
-import signal
-import time
-import sys
-#import random
+## no longer drive logic
 
-FORWARDS = 1
-BACKWARDS = -1
-DRIVING_SPEED = 100
-TURNING_SPEED = 100
+#testbed
 
-def stop_robot(duration):
-    
-    iterations = int(duration*10)
-
-    for i in range(iterations):
-        motor_serial.send_command(0, 0)
-        time.sleep(0.10)
-
-
-def drive_robot(direction, duration):
-
-    speed = DRIVING_SPEED * direction
-    iterations = int(10*duration)
-
-    for i in range(iterations):
-        motor_serial.send_command(speed, speed)
-        time.sleep(0.10)
+import keyboard as k
 
 
 
+while True:
 
+    if k.is_pressed('w'):
+        print("w")
 
-
-
-
-motor_serial = IMRTRobotSerial()
-
-
+    elif k.is_pressed('s'):
+        print("s")

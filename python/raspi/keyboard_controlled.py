@@ -4,7 +4,7 @@ import time
 import sys
 import random
 
-import keyboard as k
+import pygame
 
 
 LEFT = -1
