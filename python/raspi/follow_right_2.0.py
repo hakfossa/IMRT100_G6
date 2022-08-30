@@ -145,9 +145,9 @@ except:
 motor_serial.run()
 
 
-turn_timer = 0
-print("sleep for 3.5")
-time.sleep(3.5)
+turn_timer = -1
+print("sleep for 2")
+time.sleep(2)
 print("sleep done")
 
 
@@ -187,8 +187,8 @@ while not motor_serial.shutdown_now :
         turn_timer -= 1
 
     # se åpning høyre
-    elif sensor_right > 60 and turn_timer<=-4:
-        turn_timer = 4      
+    elif sensor_right > 60 and turn_timer<=-6:
+        turn_timer = 6      
 
     # unngå høyre vegg
     elif sensor_right < 10:
@@ -207,7 +207,7 @@ while not motor_serial.shutdown_now :
             turn_timer = -1
 
         turn_timer = turn_timer - 1
-        drive_robot(FORWARDS, 0.2, l_speed_modifier, r_speed_modifier)
+        drive_robot(FORWARDS, 0.1, l_speed_modifier, r_speed_modifier)
 
     try: 
         pass
