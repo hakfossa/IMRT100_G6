@@ -43,6 +43,7 @@ def ajust_90deg(sens_lfwd, sens_rfwd):
                 turn_robot(LEFT, 0.1)
                 print("turned left")
             else:
+                print("in else")
                 pass
             
             sens_rfwd = motor_serial.get_dist_1() 
