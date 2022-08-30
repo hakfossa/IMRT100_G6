@@ -45,7 +45,7 @@ def turn_robot(direction, duration):
 
 
 def smooth_turn(direction, duration):
-    speed = TURNING_SPEED * direction *2.5
+    speed = int(TURNING_SPEED * direction *2.5)
     iterations = int(duration * 10)
 
 
