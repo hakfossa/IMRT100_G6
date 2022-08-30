@@ -91,10 +91,10 @@ while not motor_serial.shutdown_now :
         elif k.is_pressed('w') and k.is_pressed('d') and k.is_pressed('a'):
             drive_robot(FORWARDS, 0.1)
 
-        elif k.is_pressed('w') and k.is_pressed('a'):
+        elif k.is_pressed('w') and k.is_pressed('d'):
            drive_robot(FORWARDS, 0.1, 1.2, 0.8)
 
-        elif k.is_pressed('w') and k.is_pressed('d'):
+        elif k.is_pressed('w') and k.is_pressed('a'):
             drive_robot(FORWARDS, 0.1, 0.8, 1.2) 
 
         elif k.is_pressed('w'):
