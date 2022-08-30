@@ -28,7 +28,7 @@ _fullscreen = False
 class Core_eye(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
-        self.image = pygame.image.load("eye_space_core.png")
+        self.image = pygame.image.load("bigger_eye.png")
         self.rect = self.image.get_rect()
         self.x = screenX/2
         self.y = screenY/2
@@ -271,20 +271,20 @@ while True:
                     DISPLAY = pygame.display.set_mode((screenX, screenY), pygame.FULLSCREEN)
                     _fullscreen = True
             
-            elif event.key == K_b:
+            """ elif event.key == K_b:
                 eyelids.blink()
             
             
             elif event.key == K_s:
                 print("s")
-                eyelids.squint()
+                eyelids.squint() """
     
     eye.update()
-    eyelids.update()
-    eyelid_controller.update()
+    #eyelids.update()
+    #eyelid_controller.update()
 
     DISPLAY.fill(BLACK)
     eye.draw(DISPLAY)
-    eyelids.draw(DISPLAY)
+    #eyelids.draw(DISPLAY)
 
     FPS_CONTROLLER.tick(FPS)
