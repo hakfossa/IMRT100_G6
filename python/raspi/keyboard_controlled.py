@@ -4,7 +4,7 @@ import time
 import sys
 import random
 
-import pygame
+import keyboard as k
 
 
 LEFT = -1
@@ -48,17 +48,6 @@ def turn_robot(direction, duration):
 
 
     
-
-
-
-
-
-
-
-
-
-
-
 
 
 # Create motor serial object
