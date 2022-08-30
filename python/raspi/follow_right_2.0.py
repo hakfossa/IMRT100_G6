@@ -115,6 +115,7 @@ def calc_speed_modifiers(sensor_left, sensor_right):
 
     elif 25 < sensor_right < 30:
         r_speed_modifier = 0.85
+        l_speed_modifier = 1
     else: 
         l_speed_modifier = 1
         r_speed_modifier = 1
