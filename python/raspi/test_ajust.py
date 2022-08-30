@@ -77,7 +77,8 @@ while not motor_serial.shutdown_now :
 
     print(sensor_lfwd, sensor_rfwd)
 
-    ajust_90deg(sensor_lfwd, sensor_rfwd)
+    if sensor_lfwd < 15 or sensor_rfwd < 15:
+        ajust_90deg(sensor_lfwd, sensor_rfwd)
 
 
 
