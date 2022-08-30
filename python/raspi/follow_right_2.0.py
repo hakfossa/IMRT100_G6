@@ -46,6 +46,16 @@ def turn_robot(direction, duration):
 
 def ajust_90deg(sens_lfwd, sens_rfwd):
     diff_fwd = abs(sens_rfwd-sens_lfwd)
+
+    if diff_fwd > 60:
+        # dersom kun ser noe på en sensor forran, snu 90
+        if sens_rfwd > sens_rfwd:
+            turn_robot(RIGHT, 1.0)
+        else:
+            turn_robot(LEFT, 1.0)
+
+
+    # juster til 90 grader på vegg
     while diff_fwd < 4:
         if sens_lfwd > sens_rfwd:
             turn_robot(RIGHT, 0.1)
@@ -125,10 +135,11 @@ while not motor_serial.shutdown_now :
         #stop_robot(1)
         ajust_90deg()
 
-        if sensor_right > sensor_left*2:
-            turn_robot(RIGHT,1.7)
-        else:
-            turn_robot(LEFT, 1.7)
+        if sensor_rfwd < 15 or sensor_lfwd < 15:
+            if sensor_right > sensor_left*2:
+                turn_robot(RIGHT,1.7)
+            else:
+                turn_robot(LEFT, 1.7)
 
     
 
