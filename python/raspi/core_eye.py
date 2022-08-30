@@ -70,8 +70,8 @@ class Core_eye(pygame.sprite.Sprite):
 
 
     def within_boundries(self):
-        if (self.x > screenX-135 or
-        self.x < 135 or 
+        if (self.x > screenX-155 or
+        self.x < 155 or 
         self.y > screenY-135 or
         self.y < 135):
             return False
