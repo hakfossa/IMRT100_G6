@@ -167,7 +167,7 @@ while not motor_serial.shutdown_now :
     print("turn timer:", turn_timer)
 
     # Kjøre fremover
-    if sensor_rfwd < 15 or sensor_lfwd < 15:
+    if sensor_rfwd < 17 or sensor_lfwd < 17:
         turn_timer = -1
         #stop_robot(1)
         ajust_90deg(sensor_lfwd, sensor_rfwd)
@@ -191,12 +191,12 @@ while not motor_serial.shutdown_now :
         turn_timer = 6      
 
     # unngå høyre vegg
-    elif sensor_right < 10:
+    elif sensor_right < 11:
         turn_robot(LEFT,0.3)
         drive_robot(FORWARDS, 0.2)
 
     # unngå venstre vegg
-    elif sensor_left < 10:
+    elif sensor_left < 11:
         turn_robot(RIGHT, 0.3)
         drive_robot(FORWARDS, 0.2)
 
