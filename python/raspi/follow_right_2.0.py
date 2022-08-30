@@ -174,9 +174,9 @@ while not motor_serial.shutdown_now :
 
         if sensor_rfwd < 15 or sensor_lfwd < 15:
             if sensor_right > sensor_left*2:
-                turn_robot(RIGHT,1.0)
+                turn_robot(RIGHT,0.8)
             else:
-                turn_robot(LEFT, 1.0)
+                turn_robot(LEFT, 0.8)
 
     
 
@@ -192,13 +192,13 @@ while not motor_serial.shutdown_now :
 
     # unngå høyre vegg
     elif sensor_right < 11:
-        turn_robot(LEFT,0.3)
-        drive_robot(FORWARDS, 0.2)
+        turn_robot(LEFT,0.2)
+        drive_robot(FORWARDS, 0.1)
 
     # unngå venstre vegg
     elif sensor_left < 11:
-        turn_robot(RIGHT, 0.3)
-        drive_robot(FORWARDS, 0.2)
+        turn_robot(RIGHT, 0.2)
+        drive_robot(FORWARDS, 0.1)
 
     # kjør rett frem
     else: 
