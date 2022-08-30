@@ -133,7 +133,7 @@ while not motor_serial.shutdown_now :
     if sensor_rfwd < 15 or sensor_lfwd < 15:
         turn_timer = -1
         #stop_robot(1)
-        ajust_90deg()
+        ajust_90deg(sensor_lfwd, sensor_rfwd)
 
         if sensor_rfwd < 15 or sensor_lfwd < 15:
             if sensor_right > sensor_left*2:
