@@ -181,7 +181,7 @@ while not motor_serial.shutdown_now :
 
     # svinge inn i åpning høyre
     elif turn_timer == 0:
-        smooth_turn(RIGHT, 1.0)
+        smooth_turn(RIGHT, 1.1)
         turn_timer -= 1
 
     # se åpning høyre
