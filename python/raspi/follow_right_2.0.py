@@ -10,7 +10,7 @@ RIGHT = 1
 FORWARDS = 1
 BACKWARDS = -1
 DRIVING_SPEED = 200
-TURNING_SPEED = 100
+TURNING_SPEED = 150
 STOP_DISTANCE = 25
 
 
@@ -174,9 +174,9 @@ while not motor_serial.shutdown_now :
 
         if sensor_rfwd < 15 or sensor_lfwd < 15:
             if sensor_right > sensor_left*2:
-                turn_robot(RIGHT,1.7)
+                turn_robot(RIGHT,1.2)
             else:
-                turn_robot(LEFT, 1.7)
+                turn_robot(LEFT, 1.2)
 
     
 
