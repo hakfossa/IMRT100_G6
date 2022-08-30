@@ -35,7 +35,7 @@ def ajust_90deg(sens_lfwd, sens_rfwd):
 
     else:
         # juster til 90 grader på vegg
-        while diff_fwd < 2:
+        while diff_fwd > 3:
             if sens_lfwd > sens_rfwd:
                 turn_robot(RIGHT, 0.1)
                 print("turned right")
