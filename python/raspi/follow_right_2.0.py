@@ -146,8 +146,9 @@ motor_serial.run()
 
 
 turn_timer = 0
-time.sleep(3)
-print("sleep for 3")
+print("sleep for 3.5")
+time.sleep(3.5)
+print("sleep done")
 
 
 # Now we will enter a loop that will keep looping until the program terminates
