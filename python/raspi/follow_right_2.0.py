@@ -44,11 +44,27 @@ def turn_robot(direction, duration):
         time.sleep(0.10)
 
 
+def smooth_turn(direction, duration):
+    speed = TURNING_SPEED * direction
+    iterations = int(duration * 10)
+
+
+    if direction < 1:
+        for i in range(iterations):
+            motor_serial.send_command(0, speed)
+            time.sleep(0.10)
+
+    else:
+        for i in range(iterations):
+            motor_serial.send_command(speed, 0)
+            time.sleep(0.10)
+
+
 def ajust_90deg(sens_lfwd, sens_rfwd):
     diff_fwd = abs(sens_rfwd-sens_lfwd)
     #print("diff_fwd:", diff_fwd)
 
-    if diff_fwd > 60:
+    if diff_fwd > 30:
         # dersom kun ser noe på en sensor forran, snu 90
         if sens_rfwd > sens_lfwd:
             turn_robot(RIGHT, 1.7)
@@ -96,8 +112,12 @@ def calc_speed_modifiers(sensor_left, sensor_right):
         l_speed_modifier = 0.7
     elif sensor_right < 20:
         l_speed_modifier = 0.85
+
+    elif 25 < sensor_right < 30:
+        r_speed_modifier = 0.85
     else: 
         l_speed_modifier = 1
+        r_speed_modifier = 1
     
     return l_speed_modifier, r_speed_modifier
 
@@ -161,13 +181,12 @@ while not motor_serial.shutdown_now :
 
     # svinge inn i åpning høyre
     elif turn_timer == 0:
-        turn_robot(RIGHT,1.7)
+        smooth_turn(RIGHT, 2.5)
         turn_timer -= 1
 
     # se åpning høyre
     elif sensor_right > 60 and turn_timer<=-6:
         turn_timer = 6      
-
 
     # unngå høyre vegg
     elif sensor_right < 10:
@@ -188,7 +207,10 @@ while not motor_serial.shutdown_now :
         turn_timer = turn_timer - 1
         drive_robot(FORWARDS, 0.2, l_speed_modifier, r_speed_modifier)
 
-
+    try: 
+        pass
+    except KeyboardInterrupt:
+        break
 
 # motor_serial has told us that its time to exit
 # we have now exited the loop
