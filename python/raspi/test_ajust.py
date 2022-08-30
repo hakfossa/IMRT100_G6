@@ -26,7 +26,7 @@ def ajust_90deg(sens_lfwd, sens_rfwd):
 
     if diff_fwd > 60:
         # dersom kun ser noe på en sensor forran, snu 90
-        if sens_rfwd > sens_rfwd:
+        if sens_rfwd < sens_rfwd:
             turn_robot(RIGHT, 1.0)
         else:
             turn_robot(LEFT, 1.0)
