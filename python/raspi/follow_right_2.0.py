@@ -67,9 +67,9 @@ def ajust_90deg(sens_lfwd, sens_rfwd):
     if diff_fwd > 30:
         # dersom kun ser noe på en sensor forran, snu 90
         if sens_rfwd > sens_lfwd:
-            turn_robot(RIGHT, 1.0)
+            turn_robot(RIGHT, 0.8)
         else:
-            turn_robot(LEFT, 1.0)
+            turn_robot(LEFT, 0.8)
 
         #print("wallavoid completed")
 
