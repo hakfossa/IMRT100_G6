@@ -11,7 +11,7 @@ LEFT = -1
 RIGHT = 1
 FORWARDS = 1
 BACKWARDS = -1
-DRIVING_SPEED = 100
+DRIVING_SPEED = 200
 TURNING_SPEED = 100
 STOP_DISTANCE = 25
 
@@ -85,8 +85,20 @@ while not motor_serial.shutdown_now :
  """
 
     try:  # Try such that other keypresses will not generate errors
-        if k.is_pressed('w'):
-           drive_robot(FORWARDS, 0.1) 
+        if k.is_pressed('w') and k.is_pressed('s'):
+            stop_robot(0.1)
+        
+        elif k.is_pressed('w') and k.is_pressed('d') and k.is_pressed('a'):
+            drive_robot(FORWARDS, 0.1)
+
+        elif k.is_pressed('w') and k.is_pressed('a'):
+           drive_robot(FORWARDS, 0.1, 1.2, 0.8)
+
+        elif k.is_pressed('w') and k.is_pressed('d'):
+            drive_robot(FORWARDS, 0.1, 0.8, 1.2) 
+
+        elif k.is_pressed('w'):
+            drive_robot(FORWARDS, 0.1)
 
         elif k.is_pressed('s'):
             drive_robot(BACKWARDS, 0.1)
