@@ -46,24 +46,34 @@ def turn_robot(direction, duration):
 
 def ajust_90deg(sens_lfwd, sens_rfwd):
     diff_fwd = abs(sens_rfwd-sens_lfwd)
+    #print("diff_fwd:", diff_fwd)
 
     if diff_fwd > 60:
         # dersom kun ser noe på en sensor forran, snu 90
-        if sens_rfwd > sens_rfwd:
-            turn_robot(RIGHT, 1.0)
+        if sens_rfwd > sens_lfwd:
+            turn_robot(RIGHT, 1.7)
         else:
-            turn_robot(LEFT, 1.0)
+            turn_robot(LEFT, 1.7)
+
+        #print("wallavoid completed")
 
     else:
         # juster til 90 grader på vegg
-        while diff_fwd < 2:
+        while diff_fwd > 5:
             if sens_lfwd > sens_rfwd:
                 turn_robot(RIGHT, 0.1)
+                #print("turned right")
             elif sens_lfwd < sens_rfwd:
                 turn_robot(LEFT, 0.1)
-            else:
-                pass
+                #print("turned left")
+            
+            sens_rfwd = motor_serial.get_dist_1() 
+            sens_lfwd = motor_serial.get_dist_2()
+
             diff_fwd = abs(sens_rfwd-sens_lfwd)
+
+        #print("Incremental ajust complete")
+    
 
 
 
