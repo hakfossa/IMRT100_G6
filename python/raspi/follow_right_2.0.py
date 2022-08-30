@@ -45,7 +45,7 @@ def turn_robot(direction, duration):
 
 
 def smooth_turn(direction, duration):
-    speed = TURNING_SPEED * direction *2
+    speed = TURNING_SPEED * direction *2.5
     iterations = int(duration * 10)
 
 
@@ -181,7 +181,7 @@ while not motor_serial.shutdown_now :
 
     # svinge inn i åpning høyre
     elif turn_timer == 0:
-        smooth_turn(RIGHT, 2.5)
+        smooth_turn(RIGHT, 1.7)
         turn_timer -= 1
 
     # se åpning høyre
