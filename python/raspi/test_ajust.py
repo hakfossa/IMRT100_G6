@@ -64,6 +64,10 @@ motor_serial.run()
 
 print("Entering loop. Ctrl+c to terminate")
 while not motor_serial.shutdown_now :
+    sensor_rfwd = motor_serial.get_dist_1() 
+    sensor_lfwd = motor_serial.get_dist_2()
+
+    ajust_90deg(sensor_lfwd, sensor_rfwd)
 
 
 
