@@ -38,8 +38,10 @@ def ajust_90deg(sens_lfwd, sens_rfwd):
         while diff_fwd < 2:
             if sens_lfwd > sens_rfwd:
                 turn_robot(RIGHT, 0.1)
+                print("turned right")
             elif sens_lfwd < sens_rfwd:
                 turn_robot(LEFT, 0.1)
+                print("turned left")
             else:
                 pass
             
