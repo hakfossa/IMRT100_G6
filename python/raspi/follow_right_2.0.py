@@ -9,7 +9,7 @@ LEFT = -1
 RIGHT = 1
 FORWARDS = 1
 BACKWARDS = -1
-DRIVING_SPEED = 140
+DRIVING_SPEED = 200
 TURNING_SPEED = 100
 STOP_DISTANCE = 25
 
@@ -186,8 +186,8 @@ while not motor_serial.shutdown_now :
         turn_timer -= 1
 
     # se åpning høyre
-    elif sensor_right > 60 and turn_timer<=-6:
-        turn_timer = 6      
+    elif sensor_right > 60 and turn_timer<=-4:
+        turn_timer = 4      
 
     # unngå høyre vegg
     elif sensor_right < 10:
