@@ -66,6 +66,11 @@ def ajust_90deg(sens_lfwd, sens_rfwd):
             elif sens_lfwd < sens_rfwd:
                 turn_robot(LEFT, 0.1)
                 #print("turned left")
+
+            try: 
+                pass
+            except KeyboardInterrupt:
+                break
             
             sens_rfwd = motor_serial.get_dist_1() 
             sens_lfwd = motor_serial.get_dist_2()
