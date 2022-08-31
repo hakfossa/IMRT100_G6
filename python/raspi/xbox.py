@@ -54,16 +54,7 @@ def main():
             # send motor commands
             motor_serial.send_command(int(v1), int(v2))
 
-            try:
-                pass
-            except KeyboardInterrupt:
-                motor_serial.send_command(0, 0)
-                print("inloop")
-                sys.exit()
-                
-            finally:
-                controller.shutdown()
-                print("exit inloop")
+         
 
 
             #print("a: {}, b: {}, x: {}, y: {}, lx: {:+.2f}, ly: {:+.2f}, rx: {:+.2f}, ry: {:+.2f}".format(but_a, but_b, but_x, but_y, ax_lx, ax_ly, ax_rx, ax_ry), end='\r')
