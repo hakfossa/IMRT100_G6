@@ -66,6 +66,7 @@ def main():
 
     finally:
         print("Shutting down motors")
+        motor_serial.shutdown_now = True
         motor_serial2 = imrt_robot_serial.IMRTRobotSerial()
         
         try:
