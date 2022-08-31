@@ -133,8 +133,23 @@ def main2():
         #print("a: {}, b: {}, x: {}, y: {}, lx: {:+.2f}, ly: {:+.2f}, rx: {:+.2f}, ry: {:+.2f}".format(but_a, but_b, but_x, but_y, ax_lx, ax_ly, ax_rx, ax_ry), end='\r')
 
         time.sleep(0.1)
+
+    print("Shutting down motors")
+    motor_serial.shutdown_now = True
+    motor_serial2 = imrt_robot_serial.IMRTRobotSerial()
     
-    sys.exit()
+    try:
+        motor_serial2.connect("/dev/ttyUSB0")
+    except:
+        print("Could not open port. Is your robot connected?\nExiting program")
+        sys.exit()
+    
+    motor_serial2.run()
+    motor_serial2.send_command(0, 0)
+    controller.shutdown()
+    print("Exiting program")
+
+    
 
    
 
