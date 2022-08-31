@@ -58,6 +58,7 @@ def main():
                 pass
             except KeyboardInterrupt:
                 motor_serial.send_command(0, 0)
+                print("inloop")
                 break
 
 
@@ -67,6 +68,7 @@ def main():
 
     except KeyboardInterrupt:
         motor_serial.send_command(0,0)
+        print("outloop")
         sys.exit()
 
     finally:
