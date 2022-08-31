@@ -63,11 +63,12 @@ def main():
 
     except KeyboardInterrupt:
         motor_serial.send_command(0,0)
+
         print("outloop")
         sys.exit()
 
     finally:
-        motor_serial.send_command(0,0)
+        
         controller.shutdown()
         print("Exiting program")
 
