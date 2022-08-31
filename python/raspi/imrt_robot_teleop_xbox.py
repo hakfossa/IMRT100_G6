@@ -1,6 +1,7 @@
 import imrt_robot_serial
 import imrt_xbox
 import time
+import sys
 
 
 ROBOT_WIDTH = 0.40 # m
@@ -17,7 +18,7 @@ def main():
 
     # Open serial port. Exit if serial port cannot be opened
     try:
-        motor_serial.connect("/dev/ttyACM0")
+        motor_serial.connect("/dev/ttyUSB0")
     except:
         print("Could not open port. Is your robot connected?\nExiting program")
         sys.exit()
