@@ -38,7 +38,7 @@ if __name__ == '__main__':
 
     # Open serial port. Exit if serial port cannot be opened
     try:
-        motor_serial.connect("/dev/ttyUSB0")
+        motor_serial.connect("/dev/ttyACM0")
     except:
         print("Could not open port. Is your robot connected?\nExiting program")
         sys.exit()
