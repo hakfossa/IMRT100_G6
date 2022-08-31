@@ -69,11 +69,11 @@ def main():
         print("outloop")
         sys.exit()
 
-    """ finally:
+    finally:
         
         controller.shutdown()
         print("Exiting program")
- """
+
 
 if __name__ == '__main__':
     main()
