@@ -65,10 +65,11 @@ def main():
         print("Program interupted by user")
 
     finally:
+        print("Shutting down motors")
         motor_serial2 = imrt_robot_serial.IMRTRobotSerial()
         motor_serial2.run()
         try:
-            motor_serial.connect("/dev/ttyUSB0")
+            motor_serial2.connect("/dev/ttyUSB0")
         except:
             print("Could not open port. Is your robot connected?\nExiting program")
             sys.exit()
