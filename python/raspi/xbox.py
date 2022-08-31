@@ -54,27 +54,23 @@ def main():
             # send motor commands
             motor_serial.send_command(int(v1), int(v2))
 
-            try:
-                pass
-            except KeyboardInterrupt:
-                break
-                
-
 
             #print("a: {}, b: {}, x: {}, y: {}, lx: {:+.2f}, ly: {:+.2f}, rx: {:+.2f}, ry: {:+.2f}".format(but_a, but_b, but_x, but_y, ax_lx, ax_ly, ax_rx, ax_ry), end='\r')
 
             time.sleep(0.1)
-
-    except KeyboardInterrupt:
-
-        print("outloop")
+        
         sys.exit()
 
+    except KeyboardInterrupt:
+        print("Program interupted by user")
+
     finally:
+        motor_serial.run()
+        motor_serial.send_command(0, 0)
         
         controller.shutdown()
         print("Exiting program")
-
+        sys.exit()
 
 if __name__ == '__main__':
     main()
