@@ -62,7 +62,6 @@ def main():
             time.sleep(0.1)
 
     except KeyboardInterrupt:
-        motor_serial.send_command(0,0)
 
         print("outloop")
         sys.exit()
