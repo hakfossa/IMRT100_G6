@@ -126,7 +126,7 @@ except:
 motor_serial.run()
 
 
-turn_timer = 0
+turn_timer = -1
 time.sleep(3)
 print("sleep for 3")
 
