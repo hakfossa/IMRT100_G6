@@ -10,12 +10,21 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 #starter pygame
 pygame.init()
 
+
 #fps limiter
 FPS = 30
 FPS_CONTROLLER = pygame.time.Clock()
 
 #farger
 BLACK = (0,0,0)
+
+# music:
+pygame.mixer.init()
+pygame.mixer.music.sound("space_core_quotes.mp3")
+pygame.mixer.music.set_volume(0.7)
+pygame.mixer.music.play()
+
+
 
 #setup av display
 screenX = 800
