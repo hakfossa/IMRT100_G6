@@ -20,9 +20,8 @@ BLACK = (0,0,0)
 
 # music:
 pygame.mixer.init()
-pygame.mixer.music.sound("space_core_quotes.mp3")
-pygame.mixer.music.set_volume(0.7)
-pygame.mixer.music.play()
+pygame.mixer.music.load("space_core_quotes.wav")
+pygame.mixer.music.play(-1)
 
 
 
@@ -259,7 +258,6 @@ eyelid_controller = Eyelid_controller(eyelids)
 
 
 while True:
-
 
     pygame.display.update()
        

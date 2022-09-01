@@ -2,14 +2,16 @@
 
 #testbed
 
-import keyboard as k
+import pygame
 
+mp3_path = 'space_core_quotes.wav'
 
+pygame.init()
+pygame.mixer.init()
+pygame.mixer.music.load(mp3_path)
+pygame.mixer.music.play()
 
-while True:
+clock = pygame.time.Clock()
 
-    if k.is_pressed('w'):
-        print("w")
-
-    elif k.is_pressed('s'):
-        print("s")
+while True: # main loop
+    clock.tick(60)
