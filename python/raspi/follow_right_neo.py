@@ -60,7 +60,13 @@ def ajust_90deg(sens_lfwd, sens_rfwd):
 
     else:
         # juster til 90 grader på vegg
+        stopper = 0
         while diff_fwd > 5:
+
+            # anti inf loop
+            if stopper > 5: 
+                break
+
             if sens_lfwd > sens_rfwd:
                 turn_robot(RIGHT, 0.1)
                 #print("turned right")
@@ -73,6 +79,7 @@ def ajust_90deg(sens_lfwd, sens_rfwd):
             except KeyboardInterrupt:
                 break
             
+            stopper += 1
             sens_rfwd = motor_serial.get_dist_1() 
             sens_lfwd = motor_serial.get_dist_2()
 
